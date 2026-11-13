@@ -221,10 +221,10 @@ const contactPeople = [
 /* ------------------------------------------------------------------- pieces */
 
 const ctaPrimary =
-  "inline-flex items-center justify-center gap-2 rounded-full bg-brand-magenta px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-magenta/25 transition hover:bg-brand-magenta/90 hover:shadow-xl hover:shadow-brand-magenta/30";
+  "inline-flex items-center justify-center gap-2 rounded-sm bg-brand-magenta px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-magenta/25 transition hover:bg-brand-magenta/90 hover:shadow-xl hover:shadow-brand-magenta/30";
 
 const ctaSecondary =
-  "inline-flex items-center justify-center gap-2 rounded-full border border-brand-navy/15 bg-white/85 px-6 py-3 text-sm font-semibold text-brand-navy transition hover:border-brand-navy/30 hover:bg-white hover:shadow-sm";
+  "inline-flex items-center justify-center gap-2 rounded-sm border border-brand-navy/15 bg-white/85 px-6 py-3 text-sm font-semibold text-brand-navy transition hover:border-brand-navy/30 hover:bg-white hover:shadow-sm";
 
 function SectionHeading({
   eyebrow,
@@ -274,19 +274,33 @@ function SectionHeading({
   );
 }
 
-function BrandLockup({ className }: { className?: string }) {
+function BrandLockup({ className, compact = false }: { className?: string; compact?: boolean }) {
   return (
-    <span className={cn("flex items-center gap-3", className)}>
+    <span className={cn("flex items-center gap-3 transition-all duration-300 ease-out", className)}>
       <img
         src={iptLogo}
         alt="IPT Meet 2027 — From Ideas to Impact"
-        className="h-9 w-auto max-w-[8.5rem] object-contain sm:h-10 sm:max-w-[10rem]"
+        className={cn(
+          "w-auto object-contain transition-all duration-300 ease-out",
+          compact
+            ? "h-7 max-w-[6.5rem] sm:h-8 sm:max-w-[8rem]"
+            : "h-9 max-w-[8.5rem] sm:h-10 sm:max-w-[10rem]",
+        )}
       />
-      <span className="h-9 w-px shrink-0 bg-brand-line" aria-hidden="true" />
+      <span
+        className={cn(
+          "w-px shrink-0 bg-brand-line transition-all duration-300 ease-out",
+          compact ? "h-7" : "h-9",
+        )}
+        aria-hidden="true"
+      />
       <img
         src={iitJubilee}
         alt="IIT Kharagpur Platinum Jubilee emblem, 1951–2027"
-        className="h-9 w-auto shrink-0 object-contain sm:h-10"
+        className={cn(
+          "w-auto shrink-0 object-contain transition-all duration-300 ease-out",
+          compact ? "h-7 sm:h-8" : "h-9 sm:h-10",
+        )}
       />
     </span>
   );
@@ -300,6 +314,7 @@ export function ConferenceSite() {
   const [query, setQuery] = useState("");
   const [copied, setCopied] = useState(false);
   const [activeId, setActiveId] = useState("home");
+  const [collapsed, setCollapsed] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const closeMenu = useCallback(() => setMenuOpen(false), []);
@@ -317,6 +332,15 @@ export function ConferenceSite() {
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [menuOpen]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setCollapsed(window.scrollY > 24);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -383,15 +407,25 @@ export function ConferenceSite() {
   return (
     <main className="min-h-dvh bg-white">
       {/* ------------------------------------------------------------ header */}
-      <header className="sticky top-0 z-50 border-b border-brand-line/80 bg-white/85 backdrop-blur-xl supports-[backdrop-filter]:bg-white/75">
-        <div className="shell flex h-16 items-center justify-between gap-4 lg:h-20">
+      <header
+        className={cn(
+          "sticky top-0 z-50 border-b border-brand-line/80 bg-white/85 backdrop-blur-xl transition-shadow duration-300 supports-[backdrop-filter]:bg-white/75",
+          collapsed && "shadow-sm",
+        )}
+      >
+        <div
+          className={cn(
+            "shell flex items-center justify-between gap-4 transition-[height] duration-300 ease-out",
+            collapsed ? "h-14" : "h-16 lg:h-20",
+          )}
+        >
           <a
             href="#home"
             onClick={() => setActiveId("home")}
-            className="flex shrink-0 items-center rounded-lg py-1"
+            className="flex shrink-0 items-center rounded-sm py-1"
             aria-label="IPT Meet 2027 home"
           >
-            <BrandLockup />
+            <BrandLockup compact={collapsed} />
           </a>
 
           <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Main navigation">
@@ -402,7 +436,8 @@ export function ConferenceSite() {
                   href={item.href}
                   onClick={() => setActiveId(item.id)}
                   className={cn(
-                    "rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                    "rounded-sm px-3 text-sm font-medium transition-all duration-300",
+                    collapsed ? "py-1.5" : "py-2",
                     activeId === item.id
                       ? "bg-brand-surface text-brand-navy"
                       : "text-brand-navy/70 hover:bg-brand-surface hover:text-brand-navy",
@@ -415,7 +450,10 @@ export function ConferenceSite() {
                   key={item.label}
                   type="button"
                   onClick={openBrochure}
-                  className="ml-2 inline-flex items-center gap-2 rounded-full bg-brand-magenta px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-brand-magenta/90"
+                  className={cn(
+                    "ml-2 inline-flex items-center gap-2 rounded-sm bg-brand-magenta px-4 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-brand-magenta/90",
+                    collapsed ? "py-1.5" : "py-2",
+                  )}
                 >
                   <FileText size={15} aria-hidden="true" />
                   {item.label}
@@ -428,7 +466,7 @@ export function ConferenceSite() {
             <button
               type="button"
               onClick={openBrochure}
-              className="hidden items-center gap-2 rounded-full bg-brand-magenta px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-brand-magenta/90 sm:inline-flex"
+              className="hidden items-center gap-2 rounded-sm bg-brand-magenta px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-brand-magenta/90 sm:inline-flex"
             >
               <FileText size={14} aria-hidden="true" />
               Brochure
@@ -439,7 +477,7 @@ export function ConferenceSite() {
               aria-expanded={menuOpen}
               aria-controls="mobile-navigation"
               aria-label={menuOpen ? "Close menu" : "Open menu"}
-              className="grid h-10 w-10 place-items-center rounded-full border border-brand-line bg-white text-brand-navy transition hover:bg-brand-surface"
+              className="grid h-10 w-10 place-items-center rounded-sm border border-brand-line bg-white text-brand-navy transition hover:bg-brand-surface"
             >
               {menuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -451,7 +489,7 @@ export function ConferenceSite() {
             <button
               type="button"
               aria-label="Close menu"
-              className="fixed inset-x-0 top-16 bottom-0 z-40 bg-brand-navy/20 xl:hidden"
+              className="fixed inset-0 z-40 bg-brand-navy/20 xl:hidden"
               onClick={closeMenu}
             />
             <nav
@@ -478,7 +516,7 @@ export function ConferenceSite() {
                       <button
                         type="button"
                         onClick={openBrochure}
-                        className="my-3 inline-flex w-full items-center justify-center gap-2 rounded-full bg-brand-magenta px-5 py-3 text-sm font-semibold text-white"
+                        className="my-3 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brand-magenta px-5 py-3 text-sm font-semibold text-white"
                       >
                         <FileText size={16} aria-hidden="true" />
                         {item.label}
@@ -493,25 +531,13 @@ export function ConferenceSite() {
       </header>
 
       {/* -------------------------------------------------------------- hero */}
-      <section id="home" className="relative overflow-hidden scroll-mt-24 bg-white">
+      <section id="home" className="relative overflow-hidden scroll-mt-20 bg-white">
         <div className="pointer-events-none absolute inset-0 hero-aura" aria-hidden="true" />
         <div className="pointer-events-none absolute inset-0 blueprint-grid" aria-hidden="true" />
 
         <div className="shell relative grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12 lg:py-24">
           <div>
-            <p className="inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-2xl border border-brand-teal/20 bg-brand-teal-soft px-4 py-2 text-[11px] font-semibold uppercase leading-relaxed tracking-[0.14em] text-brand-teal">
-              <span
-                className="h-1.5 w-1.5 shrink-0 rounded-full bg-brand-magenta"
-                aria-hidden="true"
-              />
-              Indian Institute of Technology Kharagpur
-              <span aria-hidden="true" className="text-brand-teal/50">
-                •
-              </span>
-              Celebrating Platinum Jubilee (August 18, 2025 – August 18, 2027)
-            </p>
-
-            <h1 className="mt-6 text-5xl font-extrabold tracking-tight text-brand-navy sm:text-6xl lg:text-7xl">
+            <h1 className="text-5xl font-extrabold tracking-tight text-brand-navy sm:text-6xl lg:text-7xl">
               IPT Meet <span className="text-brand-magenta">2027</span>
             </h1>
 
@@ -536,11 +562,11 @@ export function ConferenceSite() {
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm">
+              <span className="inline-flex items-center gap-2 rounded-sm border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm">
                 <CalendarDays size={16} className="text-brand-teal" aria-hidden="true" />
                 25th to 27th February 2027
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm">
+              <span className="inline-flex items-center gap-2 rounded-sm border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm">
                 <MapPin size={16} className="text-brand-teal" aria-hidden="true" />
                 IIT Kharagpur, West Bengal, India
               </span>
@@ -560,14 +586,14 @@ export function ConferenceSite() {
 
           <div className="relative mx-auto w-full max-w-md lg:max-w-none">
             <div
-              className="absolute -inset-3 rounded-[2.25rem] border border-brand-line/70"
+              className="absolute -inset-3 rounded-sm border border-brand-line/70"
               aria-hidden="true"
             />
             <div
-              className="absolute inset-0 translate-x-4 translate-y-4 rounded-[2rem] bg-brand-navy/[0.04]"
+              className="absolute inset-0 translate-x-4 translate-y-4 rounded-sm bg-brand-navy/[0.04]"
               aria-hidden="true"
             />
-            <div className="relative rounded-[2rem] border border-brand-line bg-white p-7 shadow-[0_30px_80px_-40px_rgba(15,23,74,0.45)] sm:p-9">
+            <div className="relative rounded-sm border border-brand-line bg-white p-7 shadow-[0_30px_80px_-40px_rgba(15,23,74,0.45)] sm:p-9">
               <img
                 src={iptLogo}
                 alt="IPT Meet 2027 logo"
@@ -592,7 +618,7 @@ export function ConferenceSite() {
               </div>
             </div>
 
-            <div className="absolute -bottom-5 -left-3 hidden h-24 w-24 flex-col items-center justify-center rounded-full border border-brand-magenta/25 bg-white text-brand-navy shadow-xl sm:flex">
+            <div className="absolute -bottom-5 -left-3 hidden h-24 w-24 flex-col items-center justify-center rounded-sm border border-brand-magenta/25 bg-white text-brand-navy shadow-xl sm:flex">
               <span className="text-lg font-extrabold">25–27</span>
               <span className="mt-0.5 text-[9px] font-bold uppercase tracking-[0.18em] text-brand-teal">
                 Feb 2027
@@ -619,9 +645,9 @@ export function ConferenceSite() {
                 return (
                   <li
                     key={step.title}
-                    className="relative flex items-center gap-3.5 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4"
+                    className="relative flex items-center gap-3.5 rounded-sm border border-white/10 bg-white/[0.04] px-4 py-4"
                   >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-brand-teal/40 bg-brand-teal/10 text-brand-teal-soft">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-brand-teal/40 bg-brand-teal/10 text-brand-teal-soft">
                       <Icon size={18} aria-hidden="true" />
                     </span>
                     <span className="min-w-0">
@@ -666,10 +692,10 @@ export function ConferenceSite() {
             {features.map(({ icon: Icon, title, text }, index) => (
               <article
                 key={title}
-                className="group flex flex-col rounded-2xl border border-brand-line bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-brand-teal/40 hover:shadow-lg hover:shadow-brand-navy/5"
+                className="group flex flex-col rounded-sm border border-brand-line bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-brand-teal/40 hover:shadow-lg hover:shadow-brand-navy/5"
               >
                 <div className="flex items-start justify-between gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-xl bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
+                  <span className="grid h-11 w-11 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
                     <Icon size={20} aria-hidden="true" />
                   </span>
                   <span className="text-xs font-bold text-brand-line">0{index + 1}</span>
@@ -686,7 +712,7 @@ export function ConferenceSite() {
       <section
         id="about"
         aria-labelledby="about-title"
-        className="scroll-mt-24 border-y border-brand-line bg-brand-surface py-16 sm:py-20 lg:py-24"
+        className="scroll-mt-20 border-y border-brand-line bg-brand-surface py-16 sm:py-20 lg:py-24"
       >
         <div className="shell">
           <SectionHeading
@@ -697,8 +723,8 @@ export function ConferenceSite() {
           />
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
-            <article className="flex flex-col rounded-3xl border border-brand-line bg-white p-7 sm:p-9">
-              <span className="w-fit rounded-full bg-brand-magenta-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-magenta">
+            <article className="flex flex-col rounded-sm border border-brand-line bg-white p-7 sm:p-9">
+              <span className="w-fit rounded-sm bg-brand-magenta-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-magenta">
                 About IPT Meet 2027
               </span>
               <h3 className="mt-5 text-2xl font-bold tracking-tight text-brand-navy">
@@ -730,8 +756,8 @@ export function ConferenceSite() {
               </dl>
             </article>
 
-            <article className="flex flex-col rounded-3xl border border-brand-line bg-white p-7 sm:p-9">
-              <span className="w-fit rounded-full bg-brand-teal-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-teal">
+            <article className="flex flex-col rounded-sm border border-brand-line bg-white p-7 sm:p-9">
+              <span className="w-fit rounded-sm bg-brand-teal-soft px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-teal">
                 About IIT Kharagpur
               </span>
               <h3 className="mt-5 text-2xl font-bold tracking-tight text-brand-navy">
@@ -787,10 +813,10 @@ export function ConferenceSite() {
               {stakeholders.map(({ icon: Icon, title, detail }, index) => (
                 <article
                   key={title}
-                  className="rounded-2xl border border-brand-line bg-white p-6 transition hover:border-brand-teal/40 hover:shadow-md hover:shadow-brand-navy/5"
+                  className="rounded-sm border border-brand-line bg-white p-6 transition hover:border-brand-teal/40 hover:shadow-md hover:shadow-brand-navy/5"
                 >
                   <div className="flex items-center justify-between">
-                    <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand-surface text-brand-teal">
+                    <span className="grid h-10 w-10 place-items-center rounded-sm bg-brand-surface text-brand-teal">
                       <Icon size={19} aria-hidden="true" />
                     </span>
                     <span className="text-xs font-bold text-brand-line">0{index + 1}</span>
@@ -810,7 +836,7 @@ export function ConferenceSite() {
       <section
         id="cfp"
         aria-labelledby="cfp-title"
-        className="scroll-mt-24 bg-white py-16 sm:py-20 lg:py-24"
+        className="scroll-mt-20 bg-white py-16 sm:py-20 lg:py-24"
       >
         <div className="shell">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
@@ -827,7 +853,7 @@ export function ConferenceSite() {
               >
                 Search the 15 tracks
               </label>
-              <div className="flex items-center gap-2 rounded-full border border-brand-line bg-brand-surface px-4 py-2.5 transition focus-within:border-brand-teal focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-teal/10">
+              <div className="flex items-center gap-2 rounded-sm border border-brand-line bg-brand-surface px-4 py-2.5 transition focus-within:border-brand-teal focus-within:bg-white focus-within:ring-4 focus-within:ring-brand-teal/10">
                 <Search size={17} className="shrink-0 text-brand-teal" aria-hidden="true" />
                 <input
                   id="track-search"
@@ -842,7 +868,7 @@ export function ConferenceSite() {
                     type="button"
                     onClick={() => setQuery("")}
                     aria-label="Clear track search"
-                    className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-brand-slate transition hover:bg-brand-line/60 hover:text-brand-navy"
+                    className="grid h-6 w-6 shrink-0 place-items-center rounded-sm text-brand-slate transition hover:bg-brand-line/60 hover:text-brand-navy"
                   >
                     <X size={14} aria-hidden="true" />
                   </button>
@@ -851,14 +877,14 @@ export function ConferenceSite() {
             </div>
           </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-2.5 rounded-2xl border border-brand-line bg-brand-surface px-5 py-4">
+          <div className="mt-9 flex flex-wrap items-center gap-2.5 rounded-sm border border-brand-line bg-brand-surface px-5 py-4">
             <span className="mr-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
               Accepted formats
             </span>
             {paperFormats.map((format) => (
               <span
                 key={format}
-                className="inline-flex items-center gap-1.5 rounded-full border border-brand-line bg-white px-3 py-1.5 text-xs font-semibold text-brand-navy"
+                className="inline-flex items-center gap-1.5 rounded-sm border border-brand-line bg-white px-3 py-1.5 text-xs font-semibold text-brand-navy"
               >
                 <Check size={13} className="text-brand-teal" aria-hidden="true" />
                 {format}
@@ -888,9 +914,9 @@ export function ConferenceSite() {
             {filteredTracks.map((track) => (
               <article
                 key={track.id}
-                className="group flex items-start gap-4 rounded-2xl border border-brand-line bg-white p-5 transition hover:border-brand-teal/40 hover:shadow-md hover:shadow-brand-navy/5"
+                className="group flex items-start gap-4 rounded-sm border border-brand-line bg-white p-5 transition hover:border-brand-teal/40 hover:shadow-md hover:shadow-brand-navy/5"
               >
-                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-teal-soft text-xs font-bold text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-sm bg-brand-teal-soft text-xs font-bold text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
                   {String(track.id).padStart(2, "0")}
                 </span>
                 <h3 className="flex-1 text-sm font-semibold leading-snug text-brand-navy">
@@ -905,8 +931,8 @@ export function ConferenceSite() {
             ))}
 
             {showMoreCard ? (
-              <article className="flex items-start gap-4 rounded-2xl border border-dashed border-brand-magenta/40 bg-brand-magenta-soft p-5">
-                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand-magenta text-sm font-bold text-white">
+              <article className="flex items-start gap-4 rounded-sm border border-dashed border-brand-magenta/40 bg-brand-magenta-soft p-5">
+                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-sm bg-brand-magenta text-sm font-bold text-white">
                   +
                 </span>
                 <div>
@@ -921,7 +947,7 @@ export function ConferenceSite() {
             ) : null}
 
             {filteredTracks.length === 0 && !showMoreCard ? (
-              <div className="col-span-full rounded-2xl border border-dashed border-brand-line bg-brand-surface px-6 py-10 text-center">
+              <div className="col-span-full rounded-sm border border-dashed border-brand-line bg-brand-surface px-6 py-10 text-center">
                 <p className="text-base font-semibold text-brand-navy">
                   No tracks match “{query.trim()}”.
                 </p>
@@ -931,7 +957,7 @@ export function ConferenceSite() {
                 <button
                   type="button"
                   onClick={() => setQuery("")}
-                  className="mt-4 rounded-full border border-brand-navy/15 bg-white px-4 py-2 text-sm font-semibold text-brand-navy transition hover:border-brand-navy/30"
+                  className="mt-4 rounded-sm border border-brand-navy/15 bg-white px-4 py-2 text-sm font-semibold text-brand-navy transition hover:border-brand-navy/30"
                 >
                   Reset search
                 </button>
@@ -939,8 +965,8 @@ export function ConferenceSite() {
             ) : null}
           </div>
 
-          <div className="mt-10 grid gap-5 rounded-3xl bg-brand-navy p-7 text-white sm:grid-cols-[auto_1fr] sm:items-center sm:p-9">
-            <span className="grid h-12 w-12 place-items-center rounded-2xl border border-white/15 bg-white/5 text-brand-teal-soft">
+          <div className="mt-10 grid gap-5 rounded-sm bg-brand-navy p-7 text-white sm:grid-cols-[auto_1fr] sm:items-center sm:p-9">
+            <span className="grid h-12 w-12 place-items-center rounded-sm border border-white/15 bg-white/5 text-brand-teal-soft">
               <FileText size={22} aria-hidden="true" />
             </span>
             <div>
@@ -960,14 +986,14 @@ export function ConferenceSite() {
       <section
         id="dates-registration"
         aria-labelledby="dates-title"
-        className="relative scroll-mt-24 overflow-hidden bg-brand-navy py-16 text-white sm:py-20 lg:py-24"
+        className="relative scroll-mt-20 overflow-hidden bg-brand-navy py-16 text-white sm:py-20 lg:py-24"
       >
         <div
-          className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-full border border-white/5"
+          className="pointer-events-none absolute -right-40 -top-40 h-96 w-96 rounded-sm border border-white/5"
           aria-hidden="true"
         />
         <div
-          className="pointer-events-none absolute -bottom-52 -left-32 h-[28rem] w-[28rem] rounded-full border border-white/5"
+          className="pointer-events-none absolute -bottom-52 -left-32 h-[28rem] w-[28rem] rounded-sm border border-white/5"
           aria-hidden="true"
         />
 
@@ -998,7 +1024,7 @@ export function ConferenceSite() {
                   <li key={milestone.label} className="relative pl-8 lg:pl-0 lg:pr-5">
                     <span
                       className={cn(
-                        "absolute left-0 top-1 grid h-2 w-2 place-items-center rounded-full border bg-brand-navy lg:static lg:mb-6",
+                        "absolute left-0 top-1 grid h-2 w-2 place-items-center rounded-sm border bg-brand-navy lg:static lg:mb-6",
                         isLive
                           ? "border-brand-magenta ring-4 ring-brand-magenta/25"
                           : "border-white/40",
@@ -1009,7 +1035,7 @@ export function ConferenceSite() {
                     </span>
 
                     {milestone.status ? (
-                      <p className="mb-2 inline-flex items-center gap-2 rounded-full bg-brand-magenta/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-magenta-soft">
+                      <p className="mb-2 inline-flex items-center gap-2 rounded-sm bg-brand-magenta/15 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-magenta-soft">
                         <span
                           className="h-1.5 w-1.5 rounded-full bg-brand-magenta"
                           aria-hidden="true"
@@ -1030,7 +1056,7 @@ export function ConferenceSite() {
             </ol>
           </div>
 
-          <div className="mt-14 grid gap-8 rounded-3xl border border-white/10 bg-white/[0.04] p-7 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12">
+          <div className="mt-14 grid gap-8 rounded-sm border border-white/10 bg-white/[0.04] p-7 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12">
             <div>
               <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal-soft/80">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
@@ -1046,7 +1072,7 @@ export function ConferenceSite() {
               </p>
             </div>
 
-            <div className="rounded-2xl border border-white/15 bg-brand-navy-deep/60 p-6">
+            <div className="rounded-sm border border-white/15 bg-brand-navy-deep/60 p-6">
               <div className="flex items-center justify-between">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-teal-soft/80">
                   Registration
@@ -1058,7 +1084,7 @@ export function ConferenceSite() {
                 Fee tiers, categories, and the registration portal will open alongside the
                 conference brochure.
               </p>
-              <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/80">
+              <p className="mt-5 inline-flex items-center gap-2 rounded-sm bg-white/[0.06] px-3 py-1.5 text-xs font-semibold text-white/80">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-teal" aria-hidden="true" />
                 Registration opening soon
               </p>
@@ -1071,7 +1097,7 @@ export function ConferenceSite() {
       <section
         id="leadership"
         aria-labelledby="leadership-title"
-        className="scroll-mt-24 border-b border-brand-line bg-brand-surface py-16 sm:py-20 lg:py-24"
+        className="scroll-mt-20 border-b border-brand-line bg-brand-surface py-16 sm:py-20 lg:py-24"
       >
         <div className="shell">
           <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
@@ -1081,7 +1107,7 @@ export function ConferenceSite() {
               description="IPT Meet 2027 is built with premier academic institutions, government bodies, industry associations, professional bodies, and international organisations — a collaborative platform for a shared agenda."
               titleId="leadership-title"
             />
-            <span className="hidden h-20 w-20 shrink-0 place-items-center rounded-full border border-brand-line bg-white text-brand-magenta lg:grid">
+            <span className="hidden h-20 w-20 shrink-0 place-items-center rounded-sm border border-brand-line bg-white text-brand-magenta lg:grid">
               <Handshake size={32} aria-hidden="true" strokeWidth={1.4} />
             </span>
           </div>
@@ -1089,13 +1115,13 @@ export function ConferenceSite() {
           <Tabs defaultValue="patrons" className="mt-10">
             <TabsList
               aria-label="Leadership categories"
-              className="flex h-auto w-full flex-wrap justify-start gap-2 rounded-none bg-transparent p-0"
+              className="flex h-auto w-full flex-wrap justify-start gap-2 rounded-sm bg-transparent p-0"
             >
               {leadershipGroups.map((group) => (
                 <TabsTrigger
                   key={group.id}
                   value={group.id}
-                  className="rounded-full border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-slate shadow-none transition hover:border-brand-teal/40 hover:text-brand-navy data-[state=active]:border-brand-magenta data-[state=active]:bg-brand-magenta data-[state=active]:text-white data-[state=active]:shadow-sm"
+                  className="rounded-sm border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-slate shadow-none transition hover:border-brand-teal/40 hover:text-brand-navy data-[state=active]:border-brand-magenta data-[state=active]:bg-brand-magenta data-[state=active]:text-white data-[state=active]:shadow-sm"
                 >
                   {group.label}
                 </TabsTrigger>
@@ -1106,10 +1132,10 @@ export function ConferenceSite() {
               const Icon = group.icon;
               return (
                 <TabsContent key={group.id} value={group.id} className="mt-6">
-                  <div className="rounded-3xl border border-brand-line bg-white p-6 sm:p-8">
+                  <div className="rounded-sm border border-brand-line bg-white p-6 sm:p-8">
                     <div className="flex flex-wrap items-start justify-between gap-4 border-b border-brand-line pb-6">
                       <div className="flex items-start gap-4">
-                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand-teal-soft text-brand-teal">
+                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal">
                           <Icon size={20} aria-hidden="true" />
                         </span>
                         <div>
@@ -1119,7 +1145,7 @@ export function ConferenceSite() {
                           </p>
                         </div>
                       </div>
-                      <span className="rounded-full bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
+                      <span className="rounded-sm bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
                         To be announced
                       </span>
                     </div>
@@ -1128,7 +1154,7 @@ export function ConferenceSite() {
                       {group.roles.map((role) => (
                         <li
                           key={role}
-                          className="rounded-xl border border-dashed border-brand-line bg-brand-surface/70 p-4"
+                          className="rounded-sm border border-dashed border-brand-line bg-brand-surface/70 p-4"
                         >
                           <p className="text-sm font-semibold text-brand-navy">{role}</p>
                           <p className="mt-1 text-xs text-brand-slate">
@@ -1159,7 +1185,7 @@ export function ConferenceSite() {
       <section
         id="contact"
         aria-labelledby="contact-title"
-        className="scroll-mt-24 bg-white py-16 sm:py-20 lg:py-24"
+        className="scroll-mt-20 bg-white py-16 sm:py-20 lg:py-24"
       >
         <div className="shell">
           <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-16">
@@ -1179,7 +1205,7 @@ export function ConferenceSite() {
                 organising team directly.
               </p>
 
-              <div className="mt-8 rounded-2xl border border-brand-line bg-brand-surface p-5 sm:p-6">
+              <div className="mt-8 rounded-sm border border-brand-line bg-brand-surface p-5 sm:p-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
                   Official email
                 </p>
@@ -1195,7 +1221,7 @@ export function ConferenceSite() {
                     type="button"
                     onClick={copyEmail}
                     className={cn(
-                      "inline-flex shrink-0 items-center justify-center gap-2 rounded-full border px-3.5 py-2 text-xs font-semibold transition",
+                      "inline-flex shrink-0 items-center justify-center gap-2 rounded-sm border px-3.5 py-2 text-xs font-semibold transition",
                       copied
                         ? "border-brand-teal bg-brand-teal text-white"
                         : "border-brand-line bg-white text-brand-navy hover:border-brand-teal/50 hover:text-brand-teal",
@@ -1219,9 +1245,9 @@ export function ConferenceSite() {
                   <a
                     key={person.name}
                     href={person.href}
-                    className="group flex items-center gap-3 rounded-2xl border border-brand-line bg-white p-4 transition hover:border-brand-teal/50 hover:bg-brand-teal-soft/50"
+                    className="group flex items-center gap-3 rounded-sm border border-brand-line bg-white p-4 transition hover:border-brand-teal/50 hover:bg-brand-teal-soft/50"
                   >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
                       <Phone size={16} aria-hidden="true" />
                     </span>
                     <span className="min-w-0">
@@ -1234,7 +1260,7 @@ export function ConferenceSite() {
                 ))}
               </div>
 
-              <div className="mt-4 rounded-2xl border border-brand-line bg-white p-5 sm:p-6">
+              <div className="mt-4 rounded-sm border border-brand-line bg-white p-5 sm:p-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
                   Host institute
                 </p>
@@ -1262,7 +1288,7 @@ export function ConferenceSite() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-3xl border border-brand-line bg-brand-surface shadow-sm">
+            <div className="overflow-hidden rounded-sm border border-brand-line bg-brand-surface shadow-sm">
               <div className="flex items-center justify-between gap-3 border-b border-brand-line bg-white px-5 py-4">
                 <p className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy">
                   <MapPin size={16} className="text-brand-magenta" aria-hidden="true" />
@@ -1297,7 +1323,7 @@ export function ConferenceSite() {
       <footer className="border-t border-white/10 bg-brand-navy text-white">
         <div className="shell grid gap-10 py-14 lg:grid-cols-[1.4fr_0.8fr_0.9fr] lg:gap-16 lg:py-16">
           <div>
-            <div className="inline-flex items-center gap-4 rounded-2xl bg-white px-4 py-3">
+            <div className="inline-flex items-center gap-4 rounded-sm bg-white px-4 py-3">
               <img
                 src={iptLogo}
                 alt="IPT Meet 2027"
@@ -1314,7 +1340,7 @@ export function ConferenceSite() {
               IPT Meet 2027 — From Ideas to Impact. Hosted by IIT Kharagpur, celebrating its
               Platinum Jubilee (August 18, 2025 – August 18, 2027).
             </p>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-full border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal-soft/80">
+            <p className="mt-4 inline-flex items-center gap-2 rounded-sm border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal-soft/80">
               <CalendarDays size={13} aria-hidden="true" />
               25–27 February 2027 · Kharagpur, India
             </p>
@@ -1411,7 +1437,7 @@ export function ConferenceSite() {
             </p>
             <a
               href="#home"
-              className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 px-4 py-2 text-xs font-semibold text-white/80 transition hover:border-white/30 hover:text-white"
+              className="inline-flex w-fit items-center gap-2 rounded-sm border border-white/15 px-4 py-2 text-xs font-semibold text-white/80 transition hover:border-white/30 hover:text-white"
             >
               Back to top
               <ArrowUp size={14} aria-hidden="true" />
@@ -1422,7 +1448,7 @@ export function ConferenceSite() {
 
       {/* ---------------------------------------------------- brochure dialog */}
       <Dialog open={brochureOpen} onOpenChange={setBrochureOpen}>
-        <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl gap-0 overflow-y-auto rounded-3xl border-brand-line p-0 text-white sm:rounded-3xl">
+        <DialogContent className="max-h-[90dvh] w-[calc(100%-2rem)] max-w-xl gap-0 overflow-y-auto rounded-sm border-brand-line p-0 text-white sm:rounded-sm">
           <div className="bg-brand-navy px-6 py-7 sm:px-8">
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal-soft/75">
               Conference brochure
@@ -1439,9 +1465,9 @@ export function ConferenceSite() {
           </div>
 
           <div className="space-y-4 px-6 py-6 sm:px-8">
-            <div className="rounded-2xl border border-brand-line bg-white p-5">
+            <div className="rounded-sm border border-brand-line bg-white p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="rounded-full bg-brand-teal-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
+                <span className="rounded-sm bg-brand-teal-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
                   Available now
                 </span>
                 <ScrollText size={18} className="text-brand-line" aria-hidden="true" />
@@ -1458,9 +1484,9 @@ export function ConferenceSite() {
               </a>
             </div>
 
-            <div className="rounded-2xl border border-dashed border-brand-line bg-brand-surface p-5">
+            <div className="rounded-sm border border-dashed border-brand-line bg-brand-surface p-5">
               <div className="flex flex-wrap items-center justify-between gap-2">
-                <span className="rounded-full bg-brand-magenta-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-magenta">
+                <span className="rounded-sm bg-brand-magenta-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-magenta">
                   Forthcoming
                 </span>
                 <Clock3 size={18} className="text-brand-line" aria-hidden="true" />
@@ -1476,7 +1502,7 @@ export function ConferenceSite() {
           </div>
 
           <div className="flex justify-end border-t border-brand-line px-6 py-4 sm:px-8">
-            <DialogClose className="inline-flex items-center justify-center rounded-full border border-brand-line bg-white px-5 py-2.5 text-sm font-semibold text-brand-navy transition hover:bg-brand-surface">
+            <DialogClose className="inline-flex items-center justify-center rounded-sm border border-brand-line bg-white px-5 py-2.5 text-sm font-semibold text-brand-navy transition hover:bg-brand-surface">
               Close
             </DialogClose>
           </div>
