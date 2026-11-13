@@ -196,35 +196,39 @@
     }
   }
 
-  /* Editorial blue-print grid used behind the hero. */
-  .blueprint-grid {
-    background-image:
-      linear-gradient(
-        to right,
-        color-mix(in oklab, var(--brand-navy) 6%, transparent) 1px,
-        transparent 1px
-      ),
-      linear-gradient(
-        to bottom,
-        color-mix(in oklab, var(--brand-navy) 6%, transparent) 1px,
-        transparent 1px
-      );
-    background-size: 56px 56px;
-    mask-image: radial-gradient(ellipse at 70% 30%, black 10%, transparent 72%);
-  }
-
-  .hero-aura {
+  /* Full-bleed stage behind the hero: deep navy → purple with teal and magenta light. */
+  .hero-stage {
     background:
       radial-gradient(
-        42rem 32rem at 88% 8%,
-        color-mix(in oklab, var(--brand-teal) 16%, transparent),
+        44rem 32rem at 84% 2%,
+        color-mix(in oklab, var(--brand-teal) 30%, transparent),
+        transparent 68%
+      ),
+      radial-gradient(
+        38rem 30rem at 2% 98%,
+        color-mix(in oklab, var(--brand-magenta) 34%, transparent),
         transparent 70%
       ),
       radial-gradient(
-        38rem 30rem at 6% 92%,
-        color-mix(in oklab, var(--brand-magenta) 12%, transparent),
-        transparent 70%
+        46rem 34rem at 98% 88%,
+        color-mix(in oklab, var(--brand-magenta) 24%, transparent),
+        transparent 74%
+      ),
+      linear-gradient(
+        155deg,
+        var(--brand-navy-deep) 0%,
+        var(--brand-navy) 56%,
+        color-mix(in oklab, var(--brand-navy) 52%, var(--brand-magenta) 48%) 100%
       );
+  }
+
+  /* Faint technology grid, faded toward the edges. */
+  .hero-grid-lines {
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.055) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: radial-gradient(ellipse at 62% 24%, black 6%, transparent 68%);
   }
 }
 

@@ -223,9 +223,6 @@ const contactPeople = [
 const ctaPrimary =
   "inline-flex items-center justify-center gap-2 rounded-sm bg-brand-magenta px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-magenta/25 transition hover:bg-brand-magenta/90 hover:shadow-xl hover:shadow-brand-magenta/30";
 
-const ctaSecondary =
-  "inline-flex items-center justify-center gap-2 rounded-sm border border-brand-navy/15 bg-white/85 px-6 py-3 text-sm font-semibold text-brand-navy transition hover:border-brand-navy/30 hover:bg-white hover:shadow-sm";
-
 function SectionHeading({
   eyebrow,
   title,
@@ -531,104 +528,141 @@ export function ConferenceSite() {
       </header>
 
       {/* -------------------------------------------------------------- hero */}
-      <section id="home" className="relative overflow-hidden scroll-mt-20 bg-white">
-        <div className="pointer-events-none absolute inset-0 hero-aura" aria-hidden="true" />
-        <div className="pointer-events-none absolute inset-0 blueprint-grid" aria-hidden="true" />
+      <section id="home" className="relative overflow-hidden scroll-mt-20 bg-brand-navy-deep">
+        <div className="pointer-events-none absolute inset-0 hero-stage" aria-hidden="true" />
+        <div className="pointer-events-none absolute inset-0 hero-grid-lines" aria-hidden="true" />
 
-        <div className="shell relative grid items-center gap-12 py-12 sm:py-16 lg:grid-cols-[1.08fr_0.92fr] lg:gap-12 lg:py-24">
+        <div className="shell relative grid items-center gap-14 py-14 sm:py-16 lg:grid-cols-[1.04fr_0.96fr] lg:gap-16 lg:py-24">
           <div>
-            <h1 className="text-5xl font-extrabold tracking-tight text-brand-navy sm:text-6xl lg:text-7xl">
-              IPT Meet <span className="text-brand-magenta">2027</span>
+            <h1 className="font-display text-[3rem] font-extrabold leading-[0.92] tracking-[-0.035em] text-white sm:text-6xl lg:text-7xl">
+              IPT Meet{" "}
+              <span className="bg-gradient-to-br from-[#FFD6EE] via-[#F585C9] to-[#B82E8D] bg-clip-text text-transparent">
+                2027
+              </span>
             </h1>
 
-            <p className="mt-5 max-w-2xl text-lg font-semibold leading-relaxed text-brand-navy/85 sm:text-xl">
+            <p className="mt-6 max-w-xl font-display text-base font-semibold leading-snug text-white/85 sm:text-lg">
               International Conference on Innovation, Intellectual Property &amp; Technology
               Transfer
             </p>
 
-            <div className="mt-6 flex items-center gap-2" aria-hidden="true">
-              <span className="h-0.5 w-12 bg-brand-teal" />
-              <span className="h-0.5 w-4 bg-brand-magenta" />
+            <div className="mt-7 flex items-center gap-1.5" aria-hidden="true">
+              <span className="h-px w-12 bg-brand-teal" />
+              <span className="h-px w-3 bg-brand-magenta" />
             </div>
 
-            <p className="mt-4 text-2xl font-semibold text-brand-navy sm:text-3xl">
+            <p className="mt-6 max-w-xl font-display text-xl font-semibold leading-snug text-white sm:text-2xl">
               Challenges and Opportunities in Emerging Technologies
             </p>
-            <p className="mt-2 text-xl font-semibold text-brand-magenta sm:text-2xl">
+            <p className="mt-2 font-display text-lg font-semibold text-[#F5A9D6] sm:text-xl">
               From Ideas to Impact
             </p>
-            <p className="mt-3 max-w-xl text-base leading-relaxed text-brand-slate">
+            <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/60 sm:text-base">
               Empowering Pioneers to Drive Deep Tech Innovation &amp; Technology Transfer.
             </p>
 
-            <div className="mt-7 flex flex-wrap gap-3">
-              <span className="inline-flex items-center gap-2 rounded-sm border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm">
-                <CalendarDays size={16} className="text-brand-teal" aria-hidden="true" />
-                25th to 27th February 2027
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-sm border border-brand-line bg-white px-4 py-2 text-sm font-semibold text-brand-navy shadow-sm">
-                <MapPin size={16} className="text-brand-teal" aria-hidden="true" />
-                IIT Kharagpur, West Bengal, India
-              </span>
-            </div>
+            <dl className="mt-8 grid max-w-xl gap-5 border-t border-white/10 pt-6 sm:grid-cols-2">
+              <div className="flex items-start gap-3">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-white/15 bg-white/[0.06] text-brand-teal-soft">
+                  <CalendarDays size={16} aria-hidden="true" />
+                </span>
+                <div>
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    Dates
+                  </dt>
+                  <dd className="mt-0.5 text-sm font-semibold text-white">25–27 February 2027</dd>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-white/15 bg-white/[0.06] text-brand-teal-soft">
+                  <MapPin size={16} aria-hidden="true" />
+                </span>
+                <div>
+                  <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
+                    Venue
+                  </dt>
+                  <dd className="mt-0.5 text-sm font-semibold text-white">
+                    IIT Kharagpur, West Bengal, India
+                  </dd>
+                </div>
+              </div>
+            </dl>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#cfp" className={ctaPrimary}>
                 Explore Call for Papers
                 <ArrowRight size={17} aria-hidden="true" />
               </a>
-              <a href="#dates-registration" className={ctaSecondary}>
+              <a
+                href="#dates-registration"
+                className="inline-flex items-center justify-center gap-2 rounded-sm border border-white/20 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/10"
+              >
                 <CalendarDays size={16} aria-hidden="true" />
                 Important Dates
               </a>
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
+          <div className="relative mx-auto w-full max-w-md lg:max-w-[30rem]">
             <div
-              className="absolute -inset-3 rounded-sm border border-brand-line/70"
+              className="pointer-events-none absolute -inset-5 rounded-sm bg-gradient-to-br from-brand-teal/25 via-transparent to-brand-magenta/30 blur-2xl"
               aria-hidden="true"
             />
             <div
-              className="absolute inset-0 translate-x-4 translate-y-4 rounded-sm bg-brand-navy/[0.04]"
+              className="pointer-events-none absolute inset-0 translate-x-3 translate-y-3 rounded-sm border border-white/15"
               aria-hidden="true"
             />
-            <div className="relative rounded-sm border border-brand-line bg-white p-7 shadow-[0_30px_80px_-40px_rgba(15,23,74,0.45)] sm:p-9">
+
+            <div className="relative rounded-sm border border-white/15 bg-white p-6 shadow-[0_40px_120px_-40px_rgba(5,8,30,0.8)] sm:p-8">
               <img
                 src={iptLogo}
-                alt="IPT Meet 2027 logo"
-                className="mx-auto h-auto w-full max-w-[21rem] object-contain"
+                alt="IPT Meet 2027 — From Ideas to Impact"
+                className="mx-auto h-auto w-full max-w-[19rem] object-contain"
               />
-              <div className="mt-7 h-px w-full bg-brand-line" aria-hidden="true" />
-              <div className="mt-6 flex items-center justify-between gap-5">
+
+              <div className="mt-8 flex items-center gap-3" aria-hidden="true">
+                <span className="h-px flex-1 bg-brand-line" />
+                <Sparkles size={13} className="text-brand-magenta" aria-hidden="true" />
+                <span className="h-px flex-1 bg-brand-line" />
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="inline-flex items-center gap-2 rounded-sm border border-brand-navy/10 bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/65">
+                  <MapPin size={11} aria-hidden="true" />
+                  Kharagpur, India
+                </p>
+                <p className="mt-4 font-display text-2xl font-extrabold tracking-tight text-brand-navy">
+                  25–27 February 2027
+                </p>
+                <p className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-slate">
+                  International Conference
+                </p>
+              </div>
+
+              <div className="mt-6 flex items-center gap-3 border-t border-brand-line pt-5">
                 <img
                   src={iitJubilee}
-                  alt="IIT Kharagpur Platinum Jubilee emblem"
-                  className="h-20 w-auto object-contain sm:h-24"
+                  alt="IIT Kharagpur Platinum Jubilee emblem, 1951–2027"
+                  className="h-11 w-auto shrink-0 object-contain"
                 />
-                <div className="text-right">
-                  <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-teal">
-                    Platinum Jubilee
+                <div className="min-w-0 border-l border-brand-line pl-3">
+                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-brand-slate">
+                    Hosted by
                   </p>
-                  <p className="mt-1 text-2xl font-bold tracking-tight text-brand-navy">
-                    1951 – 2027
+                  <p className="font-display text-sm font-bold leading-tight text-brand-navy">
+                    IIT Kharagpur
                   </p>
-                  <p className="mt-1 text-xs text-brand-slate">75 years of excellence</p>
+                  <p className="mt-0.5 text-[10px] leading-snug text-brand-slate">
+                    Platinum Jubilee · 1951–2027
+                  </p>
                 </div>
               </div>
-            </div>
-
-            <div className="absolute -bottom-5 -left-3 hidden h-24 w-24 flex-col items-center justify-center rounded-sm border border-brand-magenta/25 bg-white text-brand-navy shadow-xl sm:flex">
-              <span className="text-lg font-extrabold">25–27</span>
-              <span className="mt-0.5 text-[9px] font-bold uppercase tracking-[0.18em] text-brand-teal">
-                Feb 2027
-              </span>
             </div>
           </div>
         </div>
 
         {/* core journey strip */}
-        <div className="relative border-y border-white/10 bg-brand-navy text-white">
+        <div className="relative border-y border-white/10 bg-brand-navy-deep/70 text-white backdrop-blur-sm">
           <div className="shell grid gap-8 py-10 lg:grid-cols-[minmax(0,14rem)_1fr] lg:items-center lg:gap-12">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/50">
