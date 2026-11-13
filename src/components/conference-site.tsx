@@ -3,32 +3,13 @@ import {
   ArrowRight,
   ArrowUp,
   ArrowUpRight,
-  Award,
-  BookOpen,
-  Building2,
-  CalendarDays,
   Check,
-  Clock3,
   Copy,
   Download,
-  FileText,
-  Globe2,
-  GraduationCap,
-  Handshake,
-  Info,
-  Landmark,
-  Lightbulb,
   Mail,
   MapPin,
   Menu,
-  Microscope,
-  Network,
-  Phone,
-  ScrollText,
   Search,
-  ShieldCheck,
-  Sparkles,
-  UsersRound,
   X,
 } from "lucide-react";
 
@@ -63,61 +44,61 @@ const navItems = [
 const sectionIds = ["home", "about", "cfp", "dates-registration", "leadership", "contact"];
 
 const journey = [
-  { title: "Ideas", note: "Discover", icon: Lightbulb },
-  { title: "Protection", note: "Safeguard", icon: ShieldCheck },
-  { title: "Innovation", note: "Advance", icon: Sparkles },
-  { title: "Impact", note: "Transform", icon: Globe2 },
+  { step: "01", title: "Ideas", note: "Discover" },
+  { step: "02", title: "Protection", note: "Safeguard" },
+  { step: "03", title: "Innovation", note: "Advance" },
+  { step: "04", title: "Impact", note: "Transform" },
 ];
 
 const features = [
   {
+    index: "01",
     title: "Expert Panels",
     text: "Three high-level expert panels on emerging IP and technology challenges.",
-    icon: UsersRound,
   },
   {
+    index: "02",
     title: "Paper Presentations",
     text: "Research paper presentations across multidisciplinary tracks.",
-    icon: FileText,
   },
   {
+    index: "03",
     title: "Workshops",
     text: "Pre- and post-conference workshops on IP, innovation, policy, and design thinking.",
-    icon: Lightbulb,
   },
   {
+    index: "04",
     title: "Special Sessions",
     text: "Special sessions for patent agents, IP professionals, lawyers, and students.",
-    icon: Award,
   },
   {
+    index: "05",
     title: "Collaboration",
     text: "Opportunities for academic, industry, institutional, and international collaboration.",
-    icon: Handshake,
   },
 ];
 
 const stakeholders = [
   {
+    tag: "Track I",
     title: "Academia and Research",
     detail: "Academicians, researchers, and scholars working at the frontier of their fields.",
-    icon: GraduationCap,
   },
   {
+    tag: "Track II",
     title: "Professional and Practitioner Experts",
     detail: "Patent agents, IP professionals, lawyers, and industry practitioners.",
-    icon: Award,
   },
   {
+    tag: "Track III",
     title: "Post Graduate Students",
     detail:
       "PG students in law, policy, management, science, engineering, and related disciplines.",
-    icon: BookOpen,
   },
   {
+    tag: "Track IV",
     title: "Specialists and Policy Makers",
     detail: "Government, institutional, and innovation-ecosystem leaders shaping policy.",
-    icon: Network,
   },
 ];
 
@@ -159,7 +140,6 @@ const leadershipGroups = [
   {
     id: "patrons",
     label: "Patrons & Chairpersons",
-    icon: Landmark,
     description:
       "The leadership of IIT Kharagpur and invited dignitaries who guide the conference's vision.",
     roles: ["Chief Patron", "Patrons", "Chairperson", "Co-Chairperson"],
@@ -167,7 +147,6 @@ const leadershipGroups = [
   {
     id: "organising",
     label: "Organising Committee",
-    icon: UsersRound,
     description:
       "The core team coordinating the programme, publications, logistics, and delegate experience.",
     roles: [
@@ -180,7 +159,6 @@ const leadershipGroups = [
   {
     id: "advisory",
     label: "Advisory Committee",
-    icon: ScrollText,
     description:
       "Academic, industry, policy, and international advisors supporting the conference's direction.",
     roles: [
@@ -193,7 +171,6 @@ const leadershipGroups = [
   {
     id: "collaborators",
     label: "Collaborating Institutions",
-    icon: Building2,
     description:
       "Premier academic institutions, government bodies, industry associations, and international organisations.",
     roles: [
@@ -206,7 +183,6 @@ const leadershipGroups = [
   {
     id: "speakers",
     label: "Invited Speakers",
-    icon: Microscope,
     description:
       "Distinguished voices from research, industry, and policy joining the plenary and panel sessions.",
     roles: ["Plenary Speakers", "Panel Discussants", "Workshop Leads", "Invited Paper Sessions"],
@@ -448,11 +424,10 @@ export function ConferenceSite() {
                   type="button"
                   onClick={openBrochure}
                   className={cn(
-                    "ml-2 inline-flex items-center gap-2 rounded-sm bg-brand-magenta px-4 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-brand-magenta/90",
+                    "ml-2 inline-flex items-center rounded-sm bg-brand-magenta px-4 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:bg-brand-magenta/90",
                     collapsed ? "py-1.5" : "py-2",
                   )}
                 >
-                  <FileText size={15} aria-hidden="true" />
                   {item.label}
                 </button>
               ),
@@ -463,9 +438,8 @@ export function ConferenceSite() {
             <button
               type="button"
               onClick={openBrochure}
-              className="hidden items-center gap-2 rounded-sm bg-brand-magenta px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-brand-magenta/90 sm:inline-flex"
+              className="hidden items-center rounded-sm bg-brand-magenta px-3.5 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-brand-magenta/90 sm:inline-flex"
             >
-              <FileText size={14} aria-hidden="true" />
               Brochure
             </button>
             <button
@@ -513,9 +487,8 @@ export function ConferenceSite() {
                       <button
                         type="button"
                         onClick={openBrochure}
-                        className="my-3 inline-flex w-full items-center justify-center gap-2 rounded-sm bg-brand-magenta px-5 py-3 text-sm font-semibold text-white"
+                        className="my-3 inline-flex w-full items-center justify-center rounded-sm bg-brand-magenta px-5 py-3 text-sm font-semibold text-white"
                       >
-                        <FileText size={16} aria-hidden="true" />
                         {item.label}
                       </button>
                     )}
@@ -562,29 +535,19 @@ export function ConferenceSite() {
             </p>
 
             <dl className="mt-8 grid max-w-xl gap-5 border-t border-white/10 pt-6 sm:grid-cols-2">
-              <div className="flex items-start gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-white/15 bg-white/[0.06] text-brand-teal-soft">
-                  <CalendarDays size={16} aria-hidden="true" />
-                </span>
-                <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
-                    Dates
-                  </dt>
-                  <dd className="mt-0.5 text-sm font-semibold text-white">25–27 February 2027</dd>
-                </div>
+              <div className="border-l-2 border-brand-teal pl-3.5">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
+                  Dates
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-white">25–27 February 2027</dd>
               </div>
-              <div className="flex items-start gap-3">
-                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm border border-white/15 bg-white/[0.06] text-brand-teal-soft">
-                  <MapPin size={16} aria-hidden="true" />
-                </span>
-                <div>
-                  <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/45">
-                    Venue
-                  </dt>
-                  <dd className="mt-0.5 text-sm font-semibold text-white">
-                    IIT Kharagpur, West Bengal, India
-                  </dd>
-                </div>
+              <div className="border-l-2 border-brand-magenta pl-3.5">
+                <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
+                  Venue
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-white">
+                  IIT Kharagpur, West Bengal, India
+                </dd>
               </div>
             </dl>
 
@@ -597,7 +560,6 @@ export function ConferenceSite() {
                 href="#dates-registration"
                 className="inline-flex items-center justify-center gap-2 rounded-sm border border-white/20 bg-white/[0.04] px-6 py-3 text-sm font-semibold text-white transition hover:border-white/35 hover:bg-white/10"
               >
-                <CalendarDays size={16} aria-hidden="true" />
                 Important Dates
               </a>
             </div>
@@ -620,15 +582,10 @@ export function ConferenceSite() {
                 className="mx-auto h-auto w-full max-w-[19rem] object-contain"
               />
 
-              <div className="mt-8 flex items-center gap-3" aria-hidden="true">
-                <span className="h-px flex-1 bg-brand-line" />
-                <Sparkles size={13} className="text-brand-magenta" aria-hidden="true" />
-                <span className="h-px flex-1 bg-brand-line" />
-              </div>
+              <div className="mt-8 border-t border-brand-line" aria-hidden="true" />
 
               <div className="mt-6 text-center">
-                <p className="inline-flex items-center gap-2 rounded-sm border border-brand-navy/10 bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/65">
-                  <MapPin size={11} aria-hidden="true" />
+                <p className="inline-flex items-center rounded-sm border border-brand-navy/10 bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/65">
                   Kharagpur, India
                 </p>
                 <p className="mt-4 font-display text-2xl font-extrabold tracking-tight text-brand-navy">
@@ -674,33 +631,27 @@ export function ConferenceSite() {
               </p>
             </div>
             <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
-              {journey.map((step, index) => {
-                const Icon = step.icon;
-                return (
-                  <li
-                    key={step.title}
-                    className="relative flex items-center gap-3.5 rounded-sm border border-white/10 bg-white/[0.04] px-4 py-4"
-                  >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-sm border border-brand-teal/40 bg-brand-teal/10 text-brand-teal-soft">
-                      <Icon size={18} aria-hidden="true" />
-                    </span>
-                    <span className="min-w-0">
-                      <span className="block text-[10px] font-semibold uppercase tracking-[0.16em] text-white/40">
-                        0{index + 1}
-                      </span>
-                      <span className="block text-sm font-semibold text-white">{step.title}</span>
-                      <span className="block text-xs text-white/60">{step.note}</span>
-                    </span>
-                    {index < journey.length - 1 ? (
-                      <ArrowRight
-                        size={16}
-                        aria-hidden="true"
-                        className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-brand-teal/50 lg:block"
-                      />
-                    ) : null}
-                  </li>
-                );
-              })}
+              {journey.map((item, index) => (
+                <li
+                  key={item.title}
+                  className="relative flex items-center gap-3.5 rounded-sm border border-white/10 bg-white/[0.04] px-4 py-4"
+                >
+                  <span className="font-mono text-sm font-bold tracking-wider text-brand-teal">
+                    {item.step}
+                  </span>
+                  <span className="min-w-0 border-l border-white/10 pl-3">
+                    <span className="block text-sm font-semibold text-white">{item.title}</span>
+                    <span className="block text-xs text-white/60">{item.note}</span>
+                  </span>
+                  {index < journey.length - 1 ? (
+                    <ArrowRight
+                      size={16}
+                      aria-hidden="true"
+                      className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-brand-teal/50 lg:block"
+                    />
+                  ) : null}
+                </li>
+              ))}
             </ol>
           </div>
         </div>
@@ -723,18 +674,18 @@ export function ConferenceSite() {
           </div>
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
-            {features.map(({ icon: Icon, title, text }, index) => (
+            {features.map(({ index, title, text }) => (
               <article
                 key={title}
                 className="group flex flex-col rounded-sm border border-brand-line bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-brand-teal/40 hover:shadow-lg hover:shadow-brand-navy/5"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <span className="grid h-11 w-11 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
-                    <Icon size={20} aria-hidden="true" />
+                <div className="flex items-center justify-between border-b border-brand-line/80 pb-3">
+                  <span className="font-mono text-xs font-bold tracking-wider text-brand-teal">
+                    {index}
                   </span>
-                  <span className="text-xs font-bold text-brand-line">0{index + 1}</span>
+                  <span className="h-0.5 w-6 bg-brand-line transition group-hover:bg-brand-magenta" />
                 </div>
-                <h3 className="mt-5 text-base font-semibold text-brand-navy">{title}</h3>
+                <h3 className="mt-4 text-base font-semibold text-brand-navy">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-slate">{text}</p>
               </article>
             ))}
@@ -844,18 +795,20 @@ export function ConferenceSite() {
             </div>
 
             <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {stakeholders.map(({ icon: Icon, title, detail }, index) => (
+              {stakeholders.map(({ tag, title, detail }, index) => (
                 <article
                   key={title}
                   className="rounded-sm border border-brand-line bg-white p-6 transition hover:border-brand-teal/40 hover:shadow-md hover:shadow-brand-navy/5"
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="grid h-10 w-10 place-items-center rounded-sm bg-brand-surface text-brand-teal">
-                      <Icon size={19} aria-hidden="true" />
+                  <div className="flex items-center justify-between border-b border-brand-line/80 pb-3">
+                    <span className="text-[11px] font-bold uppercase tracking-[0.14em] text-brand-teal">
+                      {tag}
                     </span>
-                    <span className="text-xs font-bold text-brand-line">0{index + 1}</span>
+                    <span className="font-mono text-xs font-semibold text-brand-slate/60">
+                      0{index + 1}
+                    </span>
                   </div>
-                  <h4 className="mt-5 text-base font-semibold leading-snug text-brand-navy">
+                  <h4 className="mt-4 text-base font-semibold leading-snug text-brand-navy">
                     {title}
                   </h4>
                   <p className="mt-2 text-sm leading-relaxed text-brand-slate">{detail}</p>
@@ -999,19 +952,14 @@ export function ConferenceSite() {
             ) : null}
           </div>
 
-          <div className="mt-10 grid gap-5 rounded-sm bg-brand-navy p-7 text-white sm:grid-cols-[auto_1fr] sm:items-center sm:p-9">
-            <span className="grid h-12 w-12 place-items-center rounded-sm border border-white/15 bg-white/5 text-brand-teal-soft">
-              <FileText size={22} aria-hidden="true" />
-            </span>
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-teal-soft/80">
-                Submission guidelines
-              </p>
-              <p className="mt-2 text-base leading-relaxed text-white/80">
-                Detailed submission guidelines, formatting templates, and abstract submission portal
-                links will be announced in the forthcoming conference brochure.
-              </p>
-            </div>
+          <div className="mt-10 rounded-sm border-l-4 border-brand-teal bg-brand-navy p-7 text-white sm:p-9">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-teal-soft">
+              Submission guidelines
+            </p>
+            <p className="mt-2 max-w-3xl text-base leading-relaxed text-white/80">
+              Detailed submission guidelines, formatting templates, and abstract submission portal
+              links will be announced in the forthcoming conference brochure.
+            </p>
           </div>
         </div>
       </section>
@@ -1107,13 +1055,15 @@ export function ConferenceSite() {
             </div>
 
             <div className="rounded-sm border border-white/15 bg-brand-navy-deep/60 p-6">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between border-b border-white/10 pb-3">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-teal-soft/80">
                   Registration
                 </p>
-                <Clock3 size={20} className="text-brand-teal-soft/70" aria-hidden="true" />
+                <span className="rounded-sm bg-white/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white/70">
+                  Notice
+                </span>
               </div>
-              <h4 className="mt-5 text-xl font-semibold text-white">Details forthcoming</h4>
+              <h4 className="mt-4 text-xl font-semibold text-white">Details forthcoming</h4>
               <p className="mt-2 text-sm leading-relaxed text-white/60">
                 Fee tiers, categories, and the registration portal will open alongside the
                 conference brochure.
@@ -1134,17 +1084,12 @@ export function ConferenceSite() {
         className="scroll-mt-20 border-b border-brand-line bg-brand-surface py-16 sm:py-20 lg:py-24"
       >
         <div className="shell">
-          <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-            <SectionHeading
-              eyebrow="People & partnerships"
-              title="A collective endeavour."
-              description="IPT Meet 2027 is built with premier academic institutions, government bodies, industry associations, professional bodies, and international organisations — a collaborative platform for a shared agenda."
-              titleId="leadership-title"
-            />
-            <span className="hidden h-20 w-20 shrink-0 place-items-center rounded-sm border border-brand-line bg-white text-brand-magenta lg:grid">
-              <Handshake size={32} aria-hidden="true" strokeWidth={1.4} />
-            </span>
-          </div>
+          <SectionHeading
+            eyebrow="People & partnerships"
+            title="A collective endeavour."
+            description="IPT Meet 2027 is built with premier academic institutions, government bodies, industry associations, professional bodies, and international organisations — a collaborative platform for a shared agenda."
+            titleId="leadership-title"
+          />
 
           <Tabs defaultValue="patrons" className="mt-10">
             <TabsList
@@ -1162,55 +1107,46 @@ export function ConferenceSite() {
               ))}
             </TabsList>
 
-            {leadershipGroups.map((group) => {
-              const Icon = group.icon;
-              return (
-                <TabsContent key={group.id} value={group.id} className="mt-6">
-                  <div className="rounded-sm border border-brand-line bg-white p-6 sm:p-8">
-                    <div className="flex flex-wrap items-start justify-between gap-4 border-b border-brand-line pb-6">
-                      <div className="flex items-start gap-4">
-                        <span className="grid h-11 w-11 shrink-0 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal">
-                          <Icon size={20} aria-hidden="true" />
-                        </span>
-                        <div>
-                          <h3 className="text-lg font-semibold text-brand-navy">{group.label}</h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-relaxed text-brand-slate">
-                            {group.description}
-                          </p>
-                        </div>
-                      </div>
-                      <span className="rounded-sm bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
-                        To be announced
-                      </span>
+            {leadershipGroups.map((group) => (
+              <TabsContent key={group.id} value={group.id} className="mt-6">
+                <div className="rounded-sm border border-brand-line bg-white p-6 sm:p-8">
+                  <div className="flex flex-wrap items-start justify-between gap-4 border-b border-brand-line pb-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-brand-navy">{group.label}</h3>
+                      <p className="mt-1 max-w-2xl text-sm leading-relaxed text-brand-slate">
+                        {group.description}
+                      </p>
                     </div>
-
-                    <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                      {group.roles.map((role) => (
-                        <li
-                          key={role}
-                          className="rounded-sm border border-dashed border-brand-line bg-brand-surface/70 p-4"
-                        >
-                          <p className="text-sm font-semibold text-brand-navy">{role}</p>
-                          <p className="mt-1 text-xs text-brand-slate">
-                            Details in the forthcoming brochure
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <p className="mt-6 flex items-start gap-2 text-xs leading-relaxed text-brand-slate">
-                      <Info
-                        size={15}
-                        className="mt-0.5 shrink-0 text-brand-teal"
-                        aria-hidden="true"
-                      />
-                      Details to be announced in the forthcoming conference brochure. No names are
-                      published until they are confirmed.
-                    </p>
+                    <span className="rounded-sm bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
+                      To be announced
+                    </span>
                   </div>
-                </TabsContent>
-              );
-            })}
+
+                  <ul className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                    {group.roles.map((role) => (
+                      <li
+                        key={role}
+                        className="rounded-sm border border-dashed border-brand-line bg-brand-surface/70 p-4"
+                      >
+                        <p className="text-sm font-semibold text-brand-navy">{role}</p>
+                        <p className="mt-1 text-xs text-brand-slate">
+                          Details in the forthcoming brochure
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <p className="mt-6 flex items-start gap-2.5 text-xs leading-relaxed text-brand-slate">
+                    <span
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand-teal"
+                      aria-hidden="true"
+                    />
+                    Details to be announced in the forthcoming conference brochure. No names are
+                    published until they are confirmed.
+                  </p>
+                </div>
+              </TabsContent>
+            ))}
           </Tabs>
         </div>
       </section>
@@ -1279,16 +1215,16 @@ export function ConferenceSite() {
                   <a
                     key={person.name}
                     href={person.href}
-                    className="group flex items-center gap-3 rounded-sm border border-brand-line bg-white p-4 transition hover:border-brand-teal/50 hover:bg-brand-teal-soft/50"
+                    className="group flex flex-col rounded-sm border border-brand-line bg-white p-4 transition hover:border-brand-teal/50 hover:bg-brand-surface"
                   >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
-                      <Phone size={16} aria-hidden="true" />
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal">
+                      Conference Secretariat
                     </span>
-                    <span className="min-w-0">
-                      <span className="block text-sm font-semibold text-brand-navy">
-                        {person.name}
-                      </span>
-                      <span className="block text-sm text-brand-slate">{person.phone}</span>
+                    <span className="mt-1.5 block text-sm font-semibold text-brand-navy">
+                      {person.name}
+                    </span>
+                    <span className="mt-0.5 block text-sm text-brand-slate group-hover:text-brand-magenta">
+                      {person.phone}
                     </span>
                   </a>
                 ))}
@@ -1298,17 +1234,10 @@ export function ConferenceSite() {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
                   Host institute
                 </p>
-                <p className="mt-3 flex gap-3 text-sm leading-relaxed text-brand-navy">
-                  <MapPin
-                    size={18}
-                    className="mt-0.5 shrink-0 text-brand-teal"
-                    aria-hidden="true"
-                  />
-                  <span>
-                    Indian Institute of Technology Kharagpur
-                    <br />
-                    Kharagpur, West Bengal, India — 721302
-                  </span>
+                <p className="mt-3 text-sm leading-relaxed text-brand-navy">
+                  Indian Institute of Technology Kharagpur
+                  <br />
+                  Kharagpur, West Bengal, India — 721302
                 </p>
                 <a
                   href="https://www.iitkgp.ac.in/"
@@ -1324,8 +1253,7 @@ export function ConferenceSite() {
 
             <div className="overflow-hidden rounded-sm border border-brand-line bg-brand-surface shadow-sm">
               <div className="flex items-center justify-between gap-3 border-b border-brand-line bg-white px-5 py-4">
-                <p className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy">
-                  <MapPin size={16} className="text-brand-magenta" aria-hidden="true" />
+                <p className="text-sm font-semibold text-brand-navy">
                   IIT Kharagpur campus
                 </p>
                 <a
@@ -1374,8 +1302,7 @@ export function ConferenceSite() {
               IPT Meet 2027 — From Ideas to Impact. Hosted by IIT Kharagpur, celebrating its
               Platinum Jubilee (August 18, 2025 – August 18, 2027).
             </p>
-            <p className="mt-4 inline-flex items-center gap-2 rounded-sm border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal-soft/80">
-              <CalendarDays size={13} aria-hidden="true" />
+            <p className="mt-4 inline-flex items-center rounded-sm border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal-soft/80">
               25–27 February 2027 · Kharagpur, India
             </p>
           </div>
@@ -1434,23 +1361,13 @@ export function ConferenceSite() {
                     href={person.href}
                     className="inline-flex items-start gap-2 transition hover:text-white"
                   >
-                    <Phone
-                      size={15}
-                      className="mt-1 shrink-0 text-brand-teal-soft"
-                      aria-hidden="true"
-                    />
                     <span>
                       {person.name} · {person.phone}
                     </span>
                   </a>
                 </li>
               ))}
-              <li className="flex items-start gap-2">
-                <Globe2
-                  size={15}
-                  className="mt-1 shrink-0 text-brand-teal-soft"
-                  aria-hidden="true"
-                />
+              <li className="text-sm text-white/70">
                 <a
                   href="https://www.iitkgp.ac.in/"
                   target="_blank"
@@ -1500,11 +1417,10 @@ export function ConferenceSite() {
 
           <div className="space-y-4 px-6 py-6 sm:px-8">
             <div className="rounded-sm border border-brand-line bg-white p-5">
-              <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center justify-between">
                 <span className="rounded-sm bg-brand-teal-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-teal">
                   Available now
                 </span>
-                <ScrollText size={18} className="text-brand-line" aria-hidden="true" />
               </div>
               <h3 className="mt-3 text-lg font-semibold text-brand-navy">
                 IPT Meet 2027 Concept Note
@@ -1519,11 +1435,10 @@ export function ConferenceSite() {
             </div>
 
             <div className="rounded-sm border border-dashed border-brand-line bg-brand-surface p-5">
-              <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center justify-between">
                 <span className="rounded-sm bg-brand-magenta-soft px-3 py-1 text-[10px] font-bold uppercase tracking-[0.12em] text-brand-magenta">
                   Forthcoming
                 </span>
-                <Clock3 size={18} className="text-brand-line" aria-hidden="true" />
               </div>
               <h3 className="mt-3 text-lg font-semibold text-brand-navy">
                 Official Conference Brochure
