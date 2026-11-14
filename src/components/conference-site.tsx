@@ -28,7 +28,7 @@ import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ content */
 
-const EMAIL = "iitexecutiveprogramme@gmail.com";
+const EMAIL = "iptmeet@gmail.com";
 const CONCEPT_NOTE = "/downloads/ipt-meet-2027-concept-note.pdf";
 
 const navItems = [
@@ -630,26 +630,27 @@ export function ConferenceSite() {
                 <br className="hidden lg:block" /> to progress.
               </p>
             </div>
-            <ol className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
+            {/* Mobile/tablet: 2-col grid; Desktop: flex row with arrow connectors */}
+            <ol className="grid gap-3 sm:grid-cols-2 lg:flex lg:items-stretch lg:gap-0">
               {journey.map((item, index) => (
-                <li
-                  key={item.title}
-                  className="relative flex items-center gap-3.5 rounded-sm border border-white/10 bg-white/[0.04] px-4 py-4"
-                >
-                  <span className="font-mono text-sm font-bold tracking-wider text-brand-teal">
-                    {item.step}
-                  </span>
-                  <span className="min-w-0 border-l border-white/10 pl-3">
-                    <span className="block text-sm font-semibold text-white">{item.title}</span>
-                    <span className="block text-xs text-white/60">{item.note}</span>
-                  </span>
-                  {index < journey.length - 1 ? (
-                    <ArrowRight
-                      size={16}
+                <li key={item.title} className="contents">
+                  <div className="flex flex-1 items-center gap-3.5 rounded-sm border border-white/10 bg-white/[0.04] px-4 py-4 transition-colors hover:border-brand-teal/30 hover:bg-white/[0.07]">
+                    <span className="font-mono text-sm font-bold tracking-wider text-brand-teal">
+                      {item.step}
+                    </span>
+                    <span className="min-w-0 border-l border-white/10 pl-3">
+                      <span className="block text-sm font-semibold text-white">{item.title}</span>
+                      <span className="block text-xs text-white/50">{item.note}</span>
+                    </span>
+                  </div>
+                  {index < journey.length - 1 && (
+                    <div
                       aria-hidden="true"
-                      className="absolute -right-3 top-1/2 hidden -translate-y-1/2 text-brand-teal/50 lg:block"
-                    />
-                  ) : null}
+                      className="hidden shrink-0 items-center px-1 lg:flex"
+                    >
+                      <ArrowRight size={14} className="text-brand-teal/60" />
+                    </div>
+                  )}
                 </li>
               ))}
             </ol>
