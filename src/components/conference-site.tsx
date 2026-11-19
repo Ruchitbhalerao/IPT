@@ -546,7 +546,7 @@ export function ConferenceSite() {
                   Venue
                 </dt>
                 <dd className="mt-1 text-sm font-semibold text-white">
-                  IIT Kharagpur, West Bengal, India
+                  IIT Bombay, Mumbai, India
                 </dd>
               </div>
             </dl>
@@ -586,7 +586,7 @@ export function ConferenceSite() {
 
               <div className="mt-6 text-center">
                 <p className="inline-flex items-center rounded-sm border border-brand-navy/10 bg-brand-surface px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy/65">
-                  Kharagpur, India
+                  Mumbai, India
                 </p>
                 <p className="mt-4 font-display text-2xl font-extrabold tracking-tight text-brand-navy">
                   25–27 February 2027
@@ -737,7 +737,7 @@ export function ConferenceSite() {
                   <dt className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
                     Venue
                   </dt>
-                  <dd className="mt-1 font-semibold text-brand-navy">IIT Kharagpur</dd>
+                  <dd className="mt-1 font-semibold text-brand-navy">IIT Bombay, Mumbai, India</dd>
                 </div>
               </dl>
             </article>
@@ -919,15 +919,19 @@ export function ConferenceSite() {
             ))}
 
             {showMoreCard ? (
-              <article className="flex items-start gap-4 rounded-sm border border-dashed border-brand-magenta/40 bg-brand-magenta-soft p-5">
-                <span className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-sm bg-brand-magenta text-sm font-bold text-white">
+              <article className="col-span-full flex items-center gap-3.5 sm:gap-4 rounded-sm border border-dashed border-brand-magenta/40 bg-brand-magenta-soft p-4 sm:p-5 transition hover:border-brand-magenta/60">
+                <span className="grid h-9 w-9 shrink-0 place-items-center rounded-sm bg-brand-magenta text-sm font-bold text-white">
                   +
                 </span>
-                <div>
-                  <h3 className="text-sm font-semibold leading-snug text-brand-magenta">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:gap-3">
+                  <h3 className="text-sm sm:text-base font-semibold leading-snug text-brand-magenta">
                     &amp; much more…
                   </h3>
-                  <p className="mt-1 text-sm leading-relaxed text-brand-navy/70">
+                  <span
+                    className="hidden h-3.5 w-px bg-brand-magenta/30 sm:inline-block"
+                    aria-hidden="true"
+                  />
+                  <p className="text-xs sm:text-sm leading-relaxed text-brand-navy/70">
                     Cross-disciplinary submissions welcome.
                   </p>
                 </div>
@@ -1255,10 +1259,10 @@ export function ConferenceSite() {
             <div className="overflow-hidden rounded-sm border border-brand-line bg-brand-surface shadow-sm">
               <div className="flex items-center justify-between gap-3 border-b border-brand-line bg-white px-5 py-4">
                 <p className="text-sm font-semibold text-brand-navy">
-                  IIT Kharagpur campus
+                  IIT Bombay campus
                 </p>
                 <a
-                  href="https://maps.google.com/?q=Indian+Institute+of+Technology+Kharagpur"
+                  href="https://maps.google.com/?q=Indian+Institute+of+Technology+Bombay"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1 text-xs font-semibold text-brand-teal hover:underline"
@@ -1269,8 +1273,8 @@ export function ConferenceSite() {
               </div>
               <div className="aspect-[4/3] w-full sm:aspect-[16/10]">
                 <iframe
-                  title="Google Map of IIT Kharagpur campus"
-                  src="https://maps.google.com/maps?q=Indian%20Institute%20of%20Technology%20Kharagpur&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                  title="Google Map of IIT Bombay campus"
+                  src="https://maps.google.com/maps?q=Indian%20Institute%20of%20Technology%20Bombay&t=&z=14&ie=UTF8&iwloc=&output=embed"
                   className="h-full w-full border-0"
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
@@ -1304,7 +1308,7 @@ export function ConferenceSite() {
               Platinum Jubilee (August 18, 2025 – August 18, 2027).
             </p>
             <p className="mt-4 inline-flex items-center rounded-sm border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal-soft/80">
-              25–27 February 2027 · Kharagpur, India
+              25–27 February 2027 · Mumbai, India
             </p>
           </div>
 

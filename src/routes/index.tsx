@@ -9,13 +9,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Join IPT Meet 2027, the international conference on innovation, intellectual property, and technology transfer at IIT Kharagpur, 25–27 February 2027.",
+          "Join IPT Meet 2027, the international conference on innovation, intellectual property, and technology transfer at IIT Bombay, 25–27 February 2027.",
       },
       { property: "og:title", content: "IPT Meet 2027 | IIT Kharagpur" },
       {
         property: "og:description",
         content:
-          "Challenges and Opportunities in Emerging Technologies. From Ideas to Impact, 25–27 February 2027 at IIT Kharagpur.",
+          "Challenges and Opportunities in Emerging Technologies. From Ideas to Impact, 25–27 February 2027 at IIT Bombay.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

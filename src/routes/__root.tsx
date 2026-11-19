@@ -85,7 +85,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "The international conference on innovation, intellectual property, and technology transfer at IIT Kharagpur.",
+          "The international conference on innovation, intellectual property, and technology transfer at IIT Bombay.",
       },
       { name: "author", content: "Lovable" },
       { property: "og:title", content: "IPT Meet 2027 | IIT Kharagpur" },
