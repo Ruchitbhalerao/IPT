@@ -1226,79 +1226,88 @@ export function ConferenceSite() {
         className="scroll-mt-20 bg-white py-16 sm:py-20 lg:py-24"
       >
         <div className="shell">
-          <div className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-16">
-            <div>
+          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:gap-12">
+            {/* Header text spanning both columns */}
+            <div className="lg:col-span-2 flex flex-col gap-4">
               <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
                 Get in touch
               </p>
               <h2
                 id="contact-title"
-                className="mt-3 text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl"
+                className="mt-0 text-3xl font-bold tracking-tight text-brand-navy sm:text-4xl lg:text-5xl"
               >
                 Let&apos;s continue the conversation.
               </h2>
-              <p className="mt-4 max-w-xl text-base leading-relaxed text-brand-slate">
+              <p className="mt-1.5 max-w-xl text-base leading-relaxed text-brand-slate">
                 For conference enquiries, submissions, and collaboration proposals, reach the
                 organising team directly.
               </p>
+            </div>
 
-              <div className="mt-8 rounded-sm border border-brand-line bg-brand-surface p-5 sm:p-6">
+            {/* Left column: contact cards */}
+            <div className="flex flex-col gap-8">
+              {/* Official email card */}
+              <div className="rounded-sm border border-brand-line bg-brand-surface p-5 sm:p-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
                   Official email
                 </p>
-                <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <a
-                    href={`mailto:${EMAIL}`}
-                    className="inline-flex items-center gap-2.5 break-all text-base font-semibold text-brand-navy transition hover:text-brand-magenta"
-                  >
+                <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between lg:gap-5">
+                  <div className="flex items-center gap-2.5">
                     <Mail size={18} className="shrink-0 text-brand-teal" aria-hidden="true" />
-                    {EMAIL}
-                  </a>
+                    <a
+                      href={`mailto:${EMAIL}`}
+                      className="text-base font-semibold text-brand-navy transition hover:text-brand-magenta"
+                    >
+                      {EMAIL}
+                    </a>
+                  </div>
                   <button
                     type="button"
                     onClick={copyEmail}
-                    className={cn(
-                      "inline-flex shrink-0 items-center justify-center gap-2 rounded-sm border px-3.5 py-2 text-xs font-semibold transition",
-                      copied
-                        ? "border-brand-teal bg-brand-teal text-white"
-                        : "border-brand-line bg-white text-brand-navy hover:border-brand-teal/50 hover:text-brand-teal",
-                    )}
+                    className="inline-flex shrink-0 items-center justify-center gap-2 rounded-sm border border-brand-line bg-white px-4 py-2.5 text-xs font-semibold text-brand-navy transition hover:border-brand-teal hover:text-brand-teal"
                   >
                     {copied ? (
-                      <Check size={14} aria-hidden="true" />
+                      <>
+                        <Check size={14} aria-hidden="true" />
+                        Copied!
+                      </>
                     ) : (
-                      <Copy size={14} aria-hidden="true" />
+                      <>
+                        <Copy size={14} aria-hidden="true" />
+                        Copy Email
+                      </>
                     )}
-                    {copied ? "Copied!" : "Copy Email"}
+                    <span aria-live="polite" className="sr-only">
+                      {copied ? "Email address copied to clipboard" : ""}
+                    </span>
                   </button>
-                  <span aria-live="polite" className="sr-only">
-                    {copied ? "Email address copied to clipboard" : ""}
-                  </span>
                 </div>
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              {/* Conference Secretariat cards */}
+              <div className="grid gap-4 sm:grid-cols-2">
                 {contactPeople.map((person) => (
                   <a
                     key={person.name}
                     href={person.href}
-                    className="group flex flex-col rounded-sm border border-brand-line bg-white p-4 transition hover:border-brand-teal/50 hover:bg-brand-surface"
+                    className="flex flex-col rounded-sm border border-brand-line bg-white p-5 transition hover:border-brand-teal/50 hover:bg-brand-surface"
                   >
                     <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal">
                       Conference Secretariat
                     </span>
-                    <span className="mt-1.5 block text-sm font-semibold text-brand-navy">
+                    <span className="mt-1.5 block text-sm font-semibold text-brand-navy leading-tight">
                       {person.name}
                     </span>
-                    <span className="mt-0.5 block text-sm text-brand-slate group-hover:text-brand-magenta">
+                    <span className="mt-1 block text-sm text-brand-slate group-hover:text-brand-magenta">
                       {person.phone}
                     </span>
                   </a>
                 ))}
               </div>
 
-              <div className="mt-4 rounded-sm border border-brand-line bg-white p-5 sm:p-6">
+              {/* Host institute card */}
+              <div className="rounded-sm border border-brand-line bg-white p-5 sm:p-6">
                 <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-brand-slate">
                   Host institute
                 </p>
@@ -1311,7 +1320,7 @@ export function ConferenceSite() {
                   href="https://www.iitkgp.ac.in/"
                   target="_blank"
                   rel="noreferrer"
-                  className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-magenta transition hover:gap-2.5"
+                  className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-magenta transition hover:gap-2.5"
                 >
                   www.iitkgp.ac.in
                   <ArrowUpRight size={15} aria-hidden="true" />
@@ -1319,28 +1328,31 @@ export function ConferenceSite() {
               </div>
             </div>
 
-            <div className="overflow-hidden rounded-sm border border-brand-line bg-brand-surface shadow-sm">
-              <div className="flex items-center justify-between gap-3 border-b border-brand-line bg-white px-5 py-4">
-                <p className="text-sm font-semibold text-brand-navy">IIT Bombay campus</p>
-                <a
-                  href="https://maps.google.com/?q=Indian+Institute+of+Technology+Bombay"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-brand-teal hover:underline"
-                >
-                  Open in Maps
-                  <ArrowUpRight size={13} aria-hidden="true" />
-                </a>
-              </div>
-              <div className="aspect-[4/3] w-full sm:aspect-[16/10]">
-                <iframe
-                  title="Google Map of IIT Bombay campus"
-                  src="https://maps.google.com/maps?q=Indian%20Institute%20of%20Technology%20Bombay&t=&z=14&ie=UTF8&iwloc=&output=embed"
-                  className="h-full w-full border-0"
-                  loading="lazy"
-                  referrerPolicy="no-referrer-when-downgrade"
-                  allowFullScreen
-                />
+            {/* Right column: IIT Bombay campus map */}
+            <div className="flex flex-col">
+              <div className="overflow-hidden rounded-sm border border-brand-line bg-brand-surface shadow-sm">
+                <div className="flex items-center justify-between gap-3 border-b border-brand-line bg-white px-5 py-4">
+                  <p className="text-sm font-semibold text-brand-navy">IIT Bombay campus</p>
+                  <a
+                    href="https://maps.google.com/?q=Indian+Institute+of+Technology+Bombay"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-brand-teal hover:underline"
+                  >
+                    Open in Maps
+                    <ArrowUpRight size={13} aria-hidden="true" />
+                  </a>
+                </div>
+                <div className="aspect-[4/3] w-full sm:aspect-[16/10]">
+                  <iframe
+                    title="Google Map of IIT Bombay campus"
+                    src="https://maps.google.com/maps?q=Indian%20Institute%20of%20Technology%20Bombay&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                    className="h-full w-full border-0"
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    allowFullScreen
+                  />
+                </div>
               </div>
             </div>
           </div>
