@@ -6,6 +6,9 @@ import {
   Check,
   Copy,
   Download,
+  File,
+  FileText,
+  Layout,
   Mail,
   MapPin,
   Menu,
@@ -134,6 +137,29 @@ const milestones = [
   { date: "15th January 2027", label: "Notification of Acceptance" },
   { date: "31st January 2027", label: "Full Paper Submission" },
   { date: "25th to 27th February 2027", label: "Conference Dates" },
+];
+
+const submissionResources = [
+  {
+    title: "Submission Guidelines",
+    note: "Manuscript preparation, word limits, and ethical standards for authors.",
+    icon: <FileText size={18} aria-hidden="true" />,
+  },
+  {
+    title: "Formatting Templates",
+    note: "Ready-to-use LaTeX and Word templates for structured submissions.",
+    icon: <Layout size={18} aria-hidden="true" />,
+  },
+  {
+    title: "Abstract Requirements",
+    note: "Abstract structure, keywords, and the 250-word submission limit.",
+    icon: <File size={18} aria-hidden="true" />,
+  },
+  {
+    title: "Submission Portal",
+    note: "Online portal to upload papers and track review status.",
+    icon: <ArrowUpRight size={18} aria-hidden="true" />,
+  },
 ];
 
 const leadershipGroups = [
@@ -545,9 +571,7 @@ export function ConferenceSite() {
                 <dt className="text-[10px] font-semibold uppercase tracking-[0.2em] text-white/50">
                   Venue
                 </dt>
-                <dd className="mt-1 text-sm font-semibold text-white">
-                  IIT Bombay, Mumbai, India
-                </dd>
+                <dd className="mt-1 text-sm font-semibold text-white">IIT Bombay, Mumbai, India</dd>
               </div>
             </dl>
 
@@ -644,10 +668,7 @@ export function ConferenceSite() {
                     </span>
                   </div>
                   {index < journey.length - 1 && (
-                    <div
-                      aria-hidden="true"
-                      className="hidden shrink-0 items-center px-1 lg:flex"
-                    >
+                    <div aria-hidden="true" className="hidden shrink-0 items-center px-1 lg:flex">
                       <ArrowRight size={14} className="text-brand-teal/60" />
                     </div>
                   )}
@@ -957,14 +978,56 @@ export function ConferenceSite() {
             ) : null}
           </div>
 
-          <div className="mt-10 rounded-sm border-l-4 border-brand-teal bg-brand-navy p-7 text-white sm:p-9">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-brand-teal-soft">
-              Submission guidelines
-            </p>
-            <p className="mt-2 max-w-3xl text-base leading-relaxed text-white/80">
-              Detailed submission guidelines, formatting templates, and abstract submission portal
-              links will be announced in the forthcoming conference brochure.
-            </p>
+          <div className="mt-12 relative rounded-sm border border-brand-line bg-brand-navy p-8 text-white sm:p-12 lg:p-14">
+            <div
+              className="pointer-events-none absolute -top-10 -right-10 h-48 w-48 rounded-full bg-brand-teal/[0.08] blur-3xl"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute -bottom-10 -left-10 h-48 w-48 rounded-full bg-brand-magenta/[0.08] blur-3xl"
+              aria-hidden="true"
+            />
+
+            <div className="relative max-w-3xl">
+              <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal-soft">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
+                Submission guidelines
+              </p>
+              <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">
+                Ready to share your research?
+              </h2>
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
+                Prepare your manuscript and abstract for peer review. All submission resources —
+                guidelines, templates, and the portal link — will be released with the conference
+                brochure.
+              </p>
+            </div>
+
+            {/* brochure announcement strip */}
+            <div className="mt-12 rounded-sm border border-white/20 bg-white/[0.06] px-6 py-5 sm:px-8 sm:py-6">
+              <p className="text-sm leading-relaxed text-white/85">
+                Detailed submission guidelines, formatting templates, and abstract submission portal
+                links will be announced in the forthcoming conference brochure.
+              </p>
+            </div>
+
+            {/* resource cards */}
+            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {submissionResources.map((resource) => (
+                <article
+                  key={resource.title}
+                  className="group flex flex-col gap-3 rounded-sm border border-white/10 bg-white/[0.03] p-6 hover:border-brand-teal/50 hover:bg-white/[0.06] transition"
+                >
+                  <div className="grid h-10 w-10 shrink-0 place-items-center rounded-sm bg-brand-teal-soft text-brand-teal transition group-hover:bg-brand-teal group-hover:text-white">
+                    {resource.icon}
+                  </div>
+                  <h3 className="text-base font-semibold leading-snug text-white">
+                    {resource.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-white/60">{resource.note}</p>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -1258,9 +1321,7 @@ export function ConferenceSite() {
 
             <div className="overflow-hidden rounded-sm border border-brand-line bg-brand-surface shadow-sm">
               <div className="flex items-center justify-between gap-3 border-b border-brand-line bg-white px-5 py-4">
-                <p className="text-sm font-semibold text-brand-navy">
-                  IIT Bombay campus
-                </p>
+                <p className="text-sm font-semibold text-brand-navy">IIT Bombay campus</p>
                 <a
                   href="https://maps.google.com/?q=Indian+Institute+of+Technology+Bombay"
                   target="_blank"
