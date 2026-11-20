@@ -27,6 +27,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SOCIAL_LINKS } from "@/lib/social-links";
 import { cn } from "@/lib/utils";
 
 /* ------------------------------------------------------------------ content */
@@ -300,6 +301,87 @@ function BrandLockup({ className, compact = false }: { className?: string; compa
   );
 }
 
+/* -------------------------------------------------------------- social links */
+
+/** Renders a crisp monochrome brand glyph from the shared SOCIAL_LINKS config. */
+function SocialIcon({ path, size, className }: { path: string; size: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      className={className}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d={path} />
+    </svg>
+  );
+}
+
+/** Horizontal pill links with an icon, platform name and public handle. */
+function SocialPillLinks({ className }: { className?: string }) {
+  return (
+    <ul className={cn("flex flex-wrap gap-2", className)}>
+      {SOCIAL_LINKS.map(({ platform, url, label, ariaLabel, iconPath }) => (
+        <li key={platform}>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={ariaLabel}
+            className="group inline-flex items-center gap-2 rounded-sm border border-brand-line bg-white px-3 py-2 text-xs font-semibold text-brand-navy shadow-sm transition-all duration-300 ease-out hover:border-brand-teal hover:bg-brand-teal-soft hover:text-brand-teal"
+          >
+            <SocialIcon
+              path={iconPath}
+              size={16}
+              className="shrink-0 text-brand-teal/90 transition-colors group-hover:text-brand-teal"
+            />
+            <span>{platform}</span>
+            <span className="font-normal text-brand-slate/70 transition-colors group-hover:text-brand-teal/70">
+              · {label}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** Compact row of square icon-only links, styled for a light or dark surface. */
+function SocialIconLinks({
+  tone = "light",
+  className,
+}: {
+  tone?: "light" | "dark";
+  className?: string;
+}) {
+  const dark = tone === "dark";
+  return (
+    <ul className={cn("flex items-center gap-2", className)}>
+      {SOCIAL_LINKS.map(({ platform, url, ariaLabel, iconPath }) => (
+        <li key={platform}>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={ariaLabel}
+            className={cn(
+              "grid h-9 w-9 place-items-center rounded-sm border transition-all duration-300 ease-out",
+              dark
+                ? "border-white/15 bg-white/[0.04] text-white/70 hover:border-brand-teal hover:bg-brand-teal hover:text-white"
+                : "border-brand-line bg-white text-brand-navy/70 hover:border-brand-teal hover:bg-brand-teal-soft hover:text-brand-teal",
+            )}
+          >
+            <SocialIcon path={iconPath} size={17} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 /* --------------------------------------------------------------------- page */
 
 export function ConferenceSite() {
@@ -516,6 +598,13 @@ export function ConferenceSite() {
                   </li>
                 ))}
               </ul>
+
+              <div className="mt-4 border-t border-brand-line pt-4">
+                <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-slate">
+                  Follow IPT Meet 2027
+                </p>
+                <SocialIconLinks />
+              </div>
             </nav>
           </>
         ) : null}
@@ -688,7 +777,10 @@ export function ConferenceSite() {
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
             {features.map(({ title, text }) => (
-              <article key={title} className="flex flex-col rounded-sm border border-brand-line bg-white p-6">
+              <article
+                key={title}
+                className="flex flex-col rounded-sm border border-brand-line bg-white p-6"
+              >
                 <h3 className="text-base font-semibold text-brand-navy">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-slate">{text}</p>
               </article>
@@ -1308,6 +1400,17 @@ export function ConferenceSite() {
                   <ArrowUpRight size={14} aria-hidden="true" />
                 </a>
               </div>
+
+              {/* Official social channels */}
+              <div className="rounded-md border border-brand-line/50 bg-brand-surface p-6 sm:p-7 shadow-sm">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-slate/70">
+                  Official Social Channels
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-brand-slate">
+                  Follow IPT Meet 2027 for conference updates and announcements.
+                </p>
+                <SocialPillLinks className="mt-5" />
+              </div>
             </div>
 
             {/* Right column: IIT Bombay campus map */}
@@ -1365,6 +1468,12 @@ export function ConferenceSite() {
             <p className="mt-4 inline-flex items-center rounded-sm border border-white/10 px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-brand-teal-soft/80">
               25–27 February 2027 · Mumbai, India
             </p>
+            <div className="mt-6">
+              <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                Follow IPT Meet 2027
+              </p>
+              <SocialIconLinks tone="dark" />
+            </div>
           </div>
 
           <nav aria-label="Footer navigation">
