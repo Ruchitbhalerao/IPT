@@ -221,14 +221,59 @@ const contactPeople = [
 const ctaPrimary =
   "inline-flex items-center justify-center gap-2 rounded-sm bg-brand-magenta px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-magenta/25 transition hover:bg-brand-magenta/90 hover:shadow-xl hover:shadow-brand-magenta/30";
 
+/**
+ * Architectural index kicker: a two-digit mono number, slash separator, crisp
+ * uppercase label and a short hairline rule instead of a floating dot.
+ */
+function SectionIndex({
+  index,
+  label,
+  tone = "light",
+}: {
+  index: string;
+  label: string;
+  tone?: "light" | "dark";
+}) {
+  const dark = tone === "dark";
+  return (
+    <div className="flex items-center gap-3">
+      <p
+        className={cn(
+          "flex items-center gap-2.5 whitespace-nowrap text-xs font-semibold uppercase tracking-[0.12em]",
+          dark ? "text-brand-teal-soft/80" : "text-brand-teal",
+        )}
+      >
+        <span
+          className={cn(
+            "font-mono text-xs font-bold",
+            dark ? "text-brand-magenta-soft" : "text-brand-magenta",
+          )}
+        >
+          {index}
+        </span>
+        <span aria-hidden="true" className={dark ? "text-white/25" : "text-brand-line"}>
+          /
+        </span>
+        <span>{label}</span>
+      </p>
+      <span
+        aria-hidden="true"
+        className={cn("h-px min-w-8 max-w-[4rem] flex-1", dark ? "bg-white/20" : "bg-brand-line")}
+      />
+    </div>
+  );
+}
+
 function SectionHeading({
-  eyebrow,
+  index,
+  label,
   title,
   description,
   tone = "light",
   titleId,
 }: {
-  eyebrow: string;
+  index: string;
+  label: string;
   title: string;
   description?: string;
   tone?: "light" | "dark";
@@ -237,15 +282,7 @@ function SectionHeading({
   const dark = tone === "dark";
   return (
     <div className="max-w-3xl">
-      <p
-        className={cn(
-          "inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em]",
-          dark ? "text-brand-teal-soft/75" : "text-brand-teal",
-        )}
-      >
-        <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
-        {eyebrow}
-      </p>
+      <SectionIndex index={index} label={label} tone={tone} />
       <h2
         id={titleId}
         className={cn(
@@ -768,9 +805,10 @@ export function ConferenceSite() {
         <div className="shell">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Conference highlights"
-              title="A meeting of minds, built for outcomes."
-              description="Five days of rigorous dialogue, publication, and partnership around the ideas that will define the next decade of innovation."
+              index="01"
+              label="Highlights"
+              title="Programme Highlights"
+              description="The three-day programme brings together peer-reviewed paper presentations, three expert panels, workshops, and special sessions, alongside dedicated opportunities for academic and industry collaboration."
               titleId="highlights-title"
             />
           </div>
@@ -797,9 +835,10 @@ export function ConferenceSite() {
       >
         <div className="shell">
           <SectionHeading
-            eyebrow="About"
-            title="A legacy of ideas. A future in motion."
-            description="IPT Meet 2027 pairs the intellectual heritage of India's first IIT with an uncompromising focus on the technologies redefining the global economy."
+            index="02"
+            label="About"
+            title="Conference Overview"
+            description="Hosted by IIT Kharagpur at IIT Bombay, IPT Meet 2027 is an international forum for researchers, practitioners, and policymakers working on intellectual property, innovation, and technology transfer."
             titleId="about-title"
           />
 
@@ -876,17 +915,14 @@ export function ConferenceSite() {
           <div className="mt-14">
             <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
               <div>
-                <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal">
-                  <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
-                  Stakeholder composition
-                </p>
+                <SectionIndex index="02.1" label="Stakeholders" />
                 <h3 className="mt-3 text-2xl font-bold tracking-tight text-brand-navy sm:text-3xl">
-                  Who will be in the room
+                  Participant Groups
                 </h3>
               </div>
               <p className="max-w-md text-sm leading-relaxed text-brand-slate">
-                Four communities, one agenda: turning research into protected, transferable, and
-                scalable impact.
+                Four participant groups: academia and research, professional practitioners,
+                postgraduate students, and policy specialists.
               </p>
             </div>
 
@@ -924,9 +960,10 @@ export function ConferenceSite() {
         <div className="shell">
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <SectionHeading
-              eyebrow="Call for papers"
-              title="Bring your research into the conversation."
-              description="IPT Meet 2027 invites original contributions on innovation, intellectual property, emerging technologies, and technology transfer."
+              index="03"
+              label="Call for Papers"
+              title="Research Themes and Submission Formats"
+              description="Original research papers, conceptual papers, case studies, policy analyses, and professional perspectives are invited across fifteen thematic tracks."
               titleId="cfp-title"
             />
             <div className="flex w-full flex-col gap-2 lg:w-80">
@@ -943,7 +980,7 @@ export function ConferenceSite() {
                   type="search"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Try “AI”, “patents”, “green”…"
+                  placeholder=""
                   className="w-full bg-transparent text-sm text-brand-navy outline-none placeholder:text-brand-slate/70"
                 />
                 {query ? (
@@ -977,11 +1014,9 @@ export function ConferenceSite() {
 
           <div className="mt-10 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal">
-                Research areas
-              </p>
+              <SectionIndex index="03.1" label="Research Areas" />
               <h3 className="mt-2 text-2xl font-bold tracking-tight text-brand-navy sm:text-3xl">
-                Conference tracks
+                Conference Tracks
               </h3>
             </div>
             <p aria-live="polite" className="text-sm text-brand-slate">
@@ -1063,17 +1098,14 @@ export function ConferenceSite() {
             />
 
             <div className="relative max-w-3xl">
-              <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal-soft">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
-                Submission guidelines
-              </p>
+              <SectionIndex index="03.2" label="Submission Guidelines" tone="dark" />
               <h2 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">
-                Ready to share your research?
+                Submission Requirements
               </h2>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/70">
-                Prepare your manuscript and abstract for peer review. All submission resources —
-                guidelines, templates, and the portal link — will be released with the conference
-                brochure.
+                Manuscripts and abstracts are reviewed by the technical programme committee.
+                Guidelines, formatting templates, and the submission portal will be published with
+                the official brochure.
               </p>
             </div>
 
@@ -1124,9 +1156,10 @@ export function ConferenceSite() {
         <div className="shell relative">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <SectionHeading
-              eyebrow="Mark your calendar"
-              title="Important dates"
-              description="Five milestones from the first call to the conference itself. Plan ahead for IPT Meet 2027."
+              index="04"
+              label="Dates & Registration"
+              title="Key Dates and Deadlines"
+              description="Submission deadlines, acceptance notification, and conference dates for IPT Meet 2027."
               tone="dark"
               titleId="dates-title"
             />
@@ -1182,17 +1215,13 @@ export function ConferenceSite() {
 
           <div className="mt-14 grid gap-8 rounded-sm border border-white/10 bg-white/[0.04] p-7 sm:p-9 lg:grid-cols-[1.15fr_0.85fr] lg:items-center lg:gap-12">
             <div>
-              <p className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-teal-soft/80">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
-                Join the dialogue
-              </p>
+              <SectionIndex index="04.1" label="Registration" tone="dark" />
               <h3 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Join Us! Be part of a multidisciplinary dialogue shaping the future of innovation,
-                intellectual property, and technology transfer.
+                Registration Information
               </h3>
               <p className="mt-4 max-w-xl text-base leading-relaxed text-white/65">
-                Registration fee tiers and the online registration link will be announced in the
-                forthcoming conference brochure.
+                IPT Meet 2027 welcomes delegates from academia, industry, government, and practice.
+                Fee tiers and categories will be published with the official conference brochure.
               </p>
             </div>
 
@@ -1227,9 +1256,10 @@ export function ConferenceSite() {
       >
         <div className="shell">
           <SectionHeading
-            eyebrow="People & partnerships"
-            title="A collective endeavour."
-            description="IPT Meet 2027 is built with premier academic institutions, government bodies, industry associations, professional bodies, and international organisations — a collaborative platform for a shared agenda."
+            index="05"
+            label="Leadership"
+            title="Conference Leadership and Partners"
+            description="Patrons, organising and advisory committees, collaborating institutions, and invited speakers drawn from academia, government, industry, and international organisations."
             titleId="leadership-title"
           />
 
@@ -1303,19 +1333,16 @@ export function ConferenceSite() {
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:gap-12">
             {/* Header text spanning both columns */}
             <div className="lg:col-span-2 flex flex-col gap-5">
-              <p className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.22em] text-brand-teal/90">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-magenta" aria-hidden="true" />
-                Get in touch
-              </p>
+              <SectionIndex index="06" label="Contact Us" />
               <h2
                 id="contact-title"
                 className="mt-0 text-[clamp(1.8rem,3.2vw,2.6rem)] font-bold tracking-tight leading-[1.12] text-brand-navy sm:text-[2.2rem] lg:text-[3rem]"
               >
-                Let&apos;s continue the conversation.
+                Contact the Organising Committee
               </h2>
               <p className="mt-2 max-w-xl text-[clamp(0.95rem,1.1vw,1.05rem)] leading-relaxed text-body-text">
-                For conference enquiries, submissions, and collaboration proposals, reach the
-                organising team directly.
+                For enquiries on submissions, registration, sponsorship, and collaboration, contact
+                the conference secretariat.
               </p>
             </div>
 
@@ -1400,24 +1427,20 @@ export function ConferenceSite() {
                   <ArrowUpRight size={14} aria-hidden="true" />
                 </a>
               </div>
-
-              {/* Official social channels */}
-              <div className="rounded-md border border-brand-line/50 bg-brand-surface p-6 sm:p-7 shadow-sm">
-                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-slate/70">
-                  Official Social Channels
-                </p>
-                <p className="mt-2 text-sm leading-relaxed text-brand-slate">
-                  Follow IPT Meet 2027 for conference updates and announcements.
-                </p>
-                <SocialPillLinks className="mt-5" />
-              </div>
             </div>
 
-            {/* Right column: IIT Bombay campus map */}
+            {/* Right column: IIT Bombay campus map — stretches to end where the host institute card ends */}
             <div className="flex flex-col h-full">
               <div className="flex flex-col h-full overflow-hidden rounded-md border border-brand-line/50 bg-brand-surface shadow-sm transition-all duration-300 ease-out hover:border-brand-teal/60 hover:shadow-md">
                 <div className="flex items-center justify-between gap-3 border-b border-brand-line/40 bg-white px-6 py-4.5 shrink-0">
-                  <p className="text-sm font-semibold text-brand-navy/90">IIT Bombay campus</p>
+                  <div>
+                    <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-teal/90">
+                      Conference venue
+                    </p>
+                    <p className="mt-1 text-sm font-semibold text-brand-navy/90">
+                      IIT Bombay campus
+                    </p>
+                  </div>
                   <a
                     href="https://maps.google.com/?q=Indian+Institute+of+Technology+Bombay"
                     target="_blank"
@@ -1439,6 +1462,17 @@ export function ConferenceSite() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Official social channels — spans both columns */}
+            <div className="lg:col-span-2 rounded-md border border-brand-line/50 bg-brand-surface p-6 sm:p-7 shadow-sm">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-brand-slate/70">
+                Official Social Channels
+              </p>
+              <p className="mt-2 text-sm leading-relaxed text-brand-slate">
+                Follow IPT Meet 2027 for conference updates and announcements.
+              </p>
+              <SocialPillLinks className="mt-5" />
             </div>
           </div>
         </div>
