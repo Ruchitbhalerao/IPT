@@ -55,27 +55,22 @@ const journey = [
 
 const features = [
   {
-    index: "01",
     title: "Expert Panels",
     text: "Three high-level expert panels on emerging IP and technology challenges.",
   },
   {
-    index: "02",
     title: "Paper Presentations",
     text: "Research paper presentations across multidisciplinary tracks.",
   },
   {
-    index: "03",
     title: "Workshops",
-    text: "Pre- and post-conference workshops on IP, innovation, policy, and design thinking.",
+    text: "Pre-conference and post-conference workshops on IP, innovation, policy, and design thinking.",
   },
   {
-    index: "04",
     title: "Special Sessions",
     text: "Special sessions for patent agents, IP professionals, lawyers, and students.",
   },
   {
-    index: "05",
     title: "Collaboration",
     text: "Opportunities for academic, industry, institutional, and international collaboration.",
   },
@@ -692,14 +687,9 @@ export function ConferenceSite() {
           </div>
 
           <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-5">
-            {features.map(({ index, title, text }) => (
+            {features.map(({ title, text }) => (
               <article key={title} className="flex flex-col rounded-sm border border-brand-line bg-white p-6">
-                <div className="flex items-center justify-between pb-4">
-                  <span className="font-mono text-xs font-bold tracking-wider text-brand-teal">
-                    {index}
-                  </span>
-                </div>
-                <h3 className="mt-4 text-base font-semibold text-brand-navy">{title}</h3>
+                <h3 className="text-base font-semibold text-brand-navy">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-brand-slate">{text}</p>
               </article>
             ))}
